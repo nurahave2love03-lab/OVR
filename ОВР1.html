@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Задание 29 · ОВР · Расширенный курс</title>
+<meta name="description" content="Полная теория ОВР для ЕГЭ: марганец, хром, окислители, восстановители, алгоритм решения задания 29.">
+<style>
+:root{
+  --lav:#E5D4F0; --lav2:#D9BCEC; --lav3:#C99FE8;
+  --violet:#A855F7; --violet-dark:#7c3aed; --dark:#1a0b2e; --mid:#4a1d7a;
+  --bg:#faf7fc; --line:#e3d9ee; --card:#fff; --rx-bg:#faf7fc;
+  --red:#c0392b; --green:#059669; --amber:#d97706;
+  --warn-bg:#fef2f2; --warn-tx:#7f1d1d;
+  --rule-bg:#eff6ff; --rule-tx:#1e3a8a;
+  --ex-bg:#f0fdf4; --ex-tx:#14532d;
+  --att-bg:#fffbeb; --att-tx:#78350f;
+}
+[data-theme="dark"]{
+  --lav:#2a1748; --lav2:#3a2360; --lav3:#4a2d80;
+  --violet:#A855F7; --violet-dark:#c99fe8; --dark:#f0e8fa; --mid:#c4a8e8;
+  --bg:#150826; --line:#2d1a4a; --card:#1f0f38; --rx-bg:#150826;
+  --red:#f87171; --green:#34d399; --amber:#fbbf24;
+  --warn-bg:#3b0f14; --warn-tx:#fecaca;
+  --rule-bg:#0f1e3b; --rule-tx:#bfdbfe;
+  --ex-bg:#0a2a1a; --ex-tx:#bbf7d0;
+  --att-bg:#3b260a; --att-tx:#fde68a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:Georgia,"PT Serif",serif;
+  background:var(--bg);color:var(--dark);
+  font-size:16px;line-height:1.6;
+  padding-bottom:60px;
+  transition:background .3s, color .3s;
+}
+
+/* PROGRESS BAR */
+.progress-bar{
+  position:fixed;top:0;left:0;height:3px;width:0;
+  background:linear-gradient(90deg,var(--violet),var(--violet-dark));
+  z-index:200;transition:width .1s ease;
+}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--card);border-bottom:2px solid var(--violet);
+  box-shadow:0 2px 8px rgba(26,11,46,.08);
+  transition:background .3s;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  padding:8px 12px;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-links{
+  display:flex;gap:4px;flex:1;
+  overflow-x:auto;white-space:nowrap;
+  scrollbar-width:thin;
+  padding-bottom:2px;
+}
+.nav-links::-webkit-scrollbar{height:4px;}
+.nav-links::-webkit-scrollbar-thumb{background:var(--lav2);border-radius:2px;}
+.nav a{
+  display:inline-block;
+  color:var(--mid);text-decoration:none;
+  font-size:12.5px;font-weight:700;
+  padding:6px 10px;
+  border-radius:6px;
+  transition:background .15s,color .15s;
+}
+.nav a:hover{background:var(--lav);color:var(--dark);}
+.nav a.active{background:var(--violet);color:#fff;}
+
+.nav-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.icon-btn{
+  background:var(--lav);border:none;cursor:pointer;
+  width:34px;height:34px;border-radius:8px;
+  font-size:15px;display:grid;place-items:center;
+  color:var(--violet-dark);
+  transition:background .15s,transform .15s;
+}
+.icon-btn:hover{background:var(--lav2);transform:scale(1.05);}
+
+.search-wrap{position:relative;}
+.search-input{
+  width:150px;height:34px;
+  padding:0 10px 0 30px;
+  border:1px solid var(--line);border-radius:8px;
+  background:var(--bg);color:var(--dark);
+  font-family:inherit;font-size:13px;
+  transition:width .2s,border-color .2s;
+}
+.search-input:focus{
+  outline:none;border-color:var(--violet);width:200px;
+}
+.search-wrap::before{
+  content:"🔍";position:absolute;left:9px;top:50%;
+  transform:translateY(-50%);font-size:12px;opacity:.6;
+  pointer-events:none;
+}
+
+/* HEADER */
+.page-head{
+  max-width:1100px;margin:0 auto;
+  padding:40px 24px 20px;text-align:center;
+}
+.page-head h1{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.6px;margin-bottom:10px;}
+.page-head p{color:var(--mid);font-style:italic;font-size:16px;}
+.page-head .badge{
+  display:inline-block;background:var(--lav);color:var(--violet-dark);
+  font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  padding:5px 14px;border-radius:999px;margin-bottom:14px;
+}
+
+/* SECTION */
+.section{
+  max-width:1100px;margin:0 auto;padding:24px;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.section.visible{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){
+  .section{opacity:1;transform:none;transition:none;}
+}
+.section-title{
+  font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.4px;
+  padding-bottom:10px;margin-bottom:22px;
+  border-bottom:3px solid var(--violet);
+  scroll-margin-top:70px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:20px 24px 22px;
+  margin-bottom:16px;
+  box-shadow:0 1px 3px rgba(26,11,46,.04);
+  transition:background .3s,border-color .3s;
+}
+.card h3{
+  font-size:17px;font-weight:800;
+  margin-bottom:12px;color:var(--dark);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.card h3 .tag{
+  font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;
+  color:var(--violet-dark);
+  background:var(--lav);
+  padding:3px 9px;border-radius:5px;
+}
+.card h4{font-size:15.5px;font-weight:800;margin:16px 0 8px;color:var(--violet-dark);}
+.card p{margin:8px 0;}
+.card ul{margin:8px 0 8px 20px;padding:0;}
+.card ul li{margin-bottom:4px;}
+.card ol{margin:8px 0 8px 22px;padding:0;}
+.card ol li{margin-bottom:4px;}
+
+.def{
+  background:var(--lav);
+  border-radius:8px;
+  padding:12px 16px;
+  margin:10px 0;
+  font-size:15.5px;
+}
+.def b{color:var(--violet-dark);}
+
+.kv{margin:10px 0;}
+.kv .row{
+  display:grid;grid-template-columns:minmax(160px,auto) 1fr;
+  gap:10px;padding:8px 12px;
+  border-bottom:1px dashed var(--line);
+  border-radius:6px;
+}
+.kv .row:nth-child(odd){background:rgba(229,212,240,0.15);}
+[data-theme="dark"] .kv .row:nth-child(odd){background:rgba(168,85,247,0.08);}
+.kv .k{color:var(--violet-dark);font-size:14px;font-weight:700;}
+.kv .v{font-size:14.5px;color:var(--dark);}
+
+/* FORMULA */
+.rx{
+  font-family:"Consolas","SF Mono",Menlo,monospace;
+  background:var(--rx-bg);
+  border-left:4px solid var(--violet);
+  padding:12px 16px;
+  margin:12px 0 6px;
+  border-radius:0 6px 6px 0;
+  font-size:15px;
+  white-space:nowrap;overflow-x:auto;
+  color:var(--dark);
+}
+.rx .arr{color:var(--mid);padding:0 6px;}
+.rx .up{color:var(--green);font-weight:700;}
+.rx .dn{color:var(--red);font-weight:700;}
+.rx-cap{
+  font-size:13px;font-style:italic;
+  color:var(--mid);
+  padding:0 0 16px 18px;
+  margin-top:-4px;line-height:1.5;
+}
+.rx-cap b{color:var(--violet-dark);font-style:normal;font-weight:700;}
+
+/* БЛОКИ */
+.warn{
+  background:var(--warn-bg);border-left:4px solid var(--red);
+  padding:12px 16px;border-radius:0 6px 6px 0;
+  margin:12px 0;font-size:14.5px;color:var(--warn-tx);
+}
+.warn b{color:var(--red);}
+.rule{
+  background:var(--rule-bg);border-left:4px solid #2563eb;
+  padding:12px 16px;border-radius:0 6px 6px 0;
+  margin:12px 0;font-size:14.5px;color:var(--rule-tx);
+}
+.rule b{color:#2563eb;}
+[data-theme="dark"] .rule b{color:#93c5fd;}
+.ex{
+  background:var(--ex-bg);border-left:4px solid var(--green);
+  padding:12px 16px;border-radius:0 6px 6px 0;
+  margin:12px 0;font-size:14.5px;color:var(--ex-tx);
+}
+.ex b{color:var(--green);}
+.attention{
+  background:var(--att-bg);border-left:4px solid var(--amber);
+  padding:12px 16px;border-radius:0 6px 6px 0;
+  margin:12px 0;font-size:14.5px;color:var(--att-tx);
+}
+.attention b{color:var(--amber);}
+
+/* ТАБЛИЦА ЦВЕТОВ */
+.color-table{
+  width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;
+  overflow-x:auto;display:block;
+}
+.color-table thead, .color-table tbody{display:table;width:100%;}
+.color-table th{
+  background:var(--lav);color:var(--violet-dark);
+  text-align:left;padding:10px 12px;font-weight:800;
+  border-bottom:2px solid var(--violet);
+}
+.color-table td{
+  padding:10px 12px;border-bottom:1px solid var(--line);
+  vertical-align:middle;
+}
+.color-table .dot{
+  display:inline-block;width:18px;height:18px;border-radius:50%;
+  margin-right:8px;vertical-align:middle;
+  border:1px solid rgba(0,0,0,.1);
+}
+
+/* BACK TO TOP */
+.to-top{
+  position:fixed;bottom:24px;right:24px;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--violet);color:#fff;border:none;
+  font-size:20px;cursor:pointer;
+  box-shadow:0 6px 20px rgba(168,85,247,.5);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  z-index:150;
+  display:grid;place-items:center;
+}
+.to-top.show{opacity:1;pointer-events:auto;}
+.to-top:hover{transform:translateY(-3px);}
+
+/* FOOTER */
+.footer{
+  max-width:1100px;margin:60px auto 0;
+  padding:30px 24px;
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-size:13.5px;color:var(--mid);
+}
+.footer b{color:var(--violet-dark);}
+
+/* Empty search state */
+.nav-links.no-match::after{
+  content:"Ничего не найдено";
+  color:var(--mid);font-size:12.5px;
+  padding:8px 10px;font-style:italic;
+}
+
+@media print{
+  body{background:#fff;color:#000;}
+  .nav, .to-top, .progress-bar, .footer{display:none !important;}
+  .section{opacity:1 !important;transform:none !important;}
+  .card{break-inside:avoid;page-break-inside:avoid;box-shadow:none;}
+}
+@media (max-width:600px){
+  .nav-inner{padding:8px;}
+  .search-input{width:110px;}
+  .search-input:focus{width:140px;}
+  .page-head{padding:28px 16px 10px;}
+  .section{padding:16px;}
+  .card{padding:16px 16px 18px;}
+  .kv .row{grid-template-columns:1fr;gap:2px;padding:8px;}
+  .rx{font-size:14px;}
+  .rx-cap{font-size:12.5px;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-links" id="navLinks">
+      <a href="#base">Что такое ОВР</a>
+      <a href="#so">Степени окисления</a>
+      <a href="#agents">Окислители и восстановители</a>
+      <a href="#mn">Соединения марганца</a>
+      <a href="#cr">Соединения хрома</a>
+      <a href="#how">Как понять продукт</a>
+      <a href="#algo">Алгоритм</a>
+      <a href="#practice">Примеры</a>
+      <a href="#traps">Ловушки</a>
+      <a href="#visual">Визуальные признаки</a>
+      <a href="#disprop">Диспропорционирование</a>
+      <a href="#raise">Повышение СО</a>
+      <a href="#activity">Активность металлов</a>
+      <a href="#special">Особые случаи</a>
+      <a href="#check">Проверка себя</a>
+      <a href="#hno3-detail">HNO₃ и H₂SO₄</a>
+      <a href="#organic-so">СО в органике</a>
+      <a href="#practice-tasks">Практика</a>
+    </div>
+    <div class="nav-actions">
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="searchInput" placeholder="Поиск…" aria-label="Поиск по разделам">
+      </div>
+      <button class="icon-btn" id="printBtn" title="Печать / PDF" aria-label="Печать">🖨️</button>
+      <button class="icon-btn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <span class="badge">Расширенный курс · Задание 29</span>
+  <h1>Окислительно-восстановительные реакции</h1>
+  <p>Полная теория: марганец, хром, окислители, восстановители и алгоритм решения</p>
+</header>
+
+<!-- ============ ЧТО ТАКОЕ ОВР ============ -->
+<section class="section" id="base">
+  <h2 class="section-title">1. Что такое ОВР</h2>
+
+  <div class="card">
+    <h3><span class="tag">Определение</span>Основы</h3>
+    <div class="def"><b>ОВР</b> — окислительно-восстановительная реакция — реакция, в которой атомы одних элементов <b>отдают электроны</b>, а атомы других — <b>принимают</b>. Из-за этого меняются степени окисления.</div>
+    <p><b>Не ОВР:</b> Ba(OH)₂ + H₂SO₄ → BaSO₄↓ + H₂O. Степени окисления не меняются.</p>
+    <p><b>ОВР:</b> Fe⁺²O + HN⁺⁵O₃ → Fe⁺³(NO₃)₃ + N⁺⁴O₂ + H₂O. Железо повысило СО, азот понизил.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Понятия</span>Окислитель и восстановитель</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Окислитель</div><div class="v">принимает электроны, понижает СО, восстанавливается</div></div>
+      <div class="row"><div class="k">Восстановитель</div><div class="v">отдаёт электроны, повышает СО, окисляется</div></div>
+      <div class="row"><div class="k">Окисление</div><div class="v">процесс отдачи электронов (восстановителем)</div></div>
+      <div class="row"><div class="k">Восстановление</div><div class="v">процесс принятия электронов (окислителем)</div></div>
+    </div>
+    <div class="rule"><b>Главное правило:</b> число отданных электронов = число принятых. Это баланс.</div>
+  </div>
+</section>
+
+<!-- ============ СТЕПЕНИ ОКИСЛЕНИЯ ============ -->
+<section class="section" id="so">
+  <h2 class="section-title">2. Степени окисления</h2>
+
+  <div class="card">
+    <h3><span class="tag">Определение</span>Что такое СО</h3>
+    <div class="def"><b>Степень окисления</b> — гипотетический заряд атома, если бы все связи в молекуле стали ионными.</div>
+    <p><b>Правило суммы:</b> сумма всех СО в молекуле = 0. В ионе — заряду иона.</p>
+    <div class="ex"><b>Пример K₂SO₄:</b> 2·(+1) + S + 4·(−2) = 0 → S = +6.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Постоянные</span>Что нужно знать наизусть</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Щелочные Me (Li, Na, K, Rb, Cs)</div><div class="v">+1</div></div>
+      <div class="row"><div class="k">Щ/з Me (Ca, Sr, Ba, Ra)</div><div class="v">+2</div></div>
+      <div class="row"><div class="k">Be, Mg, Zn</div><div class="v">+2</div></div>
+      <div class="row"><div class="k">Al</div><div class="v">+3</div></div>
+      <div class="row"><div class="k">H (везде, кроме гидридов)</div><div class="v">+1</div></div>
+      <div class="row"><div class="k">H в гидридах (LiH, CaH₂, NaH)</div><div class="v">−1</div></div>
+      <div class="row"><div class="k">O (везде, кроме OF₂ и H₂O₂)</div><div class="v">−2</div></div>
+      <div class="row"><div class="k">O в OF₂</div><div class="v">+2</div></div>
+      <div class="row"><div class="k">O в пероксидах (H₂O₂, Na₂O₂)</div><div class="v">−1</div></div>
+      <div class="row"><div class="k">F</div><div class="v">−1 всегда</div></div>
+      <div class="row"><div class="k">S в сульфидах (с металлами)</div><div class="v">−2</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Переменные</span>Высшие и низшие СО</h3>
+    <p><b>Высшая СО</b> обычно = номеру группы. <b>Низшая СО</b> для неметаллов = (номер группы − 8).</p>
+    <div class="kv">
+      <div class="row"><div class="k">N</div><div class="v">высшая +5, низшая −3</div></div>
+      <div class="row"><div class="k">S</div><div class="v">высшая +6, низшая −2</div></div>
+      <div class="row"><div class="k">Cl</div><div class="v">высшая +7, низшая −1</div></div>
+      <div class="row"><div class="k">Mn</div><div class="v">высшая +7, промежуточные +2, +3, +4, +6</div></div>
+      <div class="row"><div class="k">Cr</div><div class="v">высшая +6, промежуточные +2, +3</div></div>
+    </div>
+    <div class="rule"><b>Запомни:</b> элемент в <b>высшей</b> СО — только окислитель. В <b>низшей</b> — только восстановитель. В <b>промежуточной</b> — и то, и другое.</div>
+  </div>
+</section>
+
+<!-- ============ ОКИСЛИТЕЛИ И ВОССТАНОВИТЕЛИ ============ -->
+<section class="section" id="agents">
+  <h2 class="section-title">3. Типичные окислители и восстановители</h2>
+
+  <div class="card">
+    <h3><span class="tag">Шпаргалка</span>Окислители</h3>
+    <p>Окислитель — <b>забирает</b> электроны. Обычно это элемент в высшей СО.</p>
+    <div class="kv">
+      <div class="row"><div class="k">Простые вещества</div><div class="v">F₂, O₂, O₃, Cl₂, Br₂</div></div>
+      <div class="row"><div class="k">Кислоты</div><div class="v">HNO₃, H₂SO₄(конц.), HClO₄, HClO</div></div>
+      <div class="row"><div class="k">Соли</div><div class="v">KMnO₄, K₂Cr₂O₇, KClO₃, FeCl₃, CuCl₂, K₂CrO₄</div></div>
+      <div class="row"><div class="k">Оксиды</div><div class="v">MnO₂, PbO₂, CrO₃, CuO, Ag₂O</div></div>
+      <div class="row"><div class="k">Пероксиды</div><div class="v">H₂O₂, Na₂O₂, BaO₂</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Шпаргалка</span>Восстановители</h3>
+    <p>Восстановитель — <b>отдаёт</b> электроны. Обычно это элемент в низшей СО.</p>
+    <div class="kv">
+      <div class="row"><div class="k">Металлы</div><div class="v">все Me⁰, особенно активные (IA, IIA, Al, Zn)</div></div>
+      <div class="row"><div class="k">Неметаллы</div><div class="v">H₂, C, S, P, Si</div></div>
+      <div class="row"><div class="k">Кислоты</div><div class="v">HCl, HBr, HI, H₂S</div></div>
+      <div class="row"><div class="k">Соли</div><div class="v">KI, Na₂S, Na₂SO₃, FeSO₄, SnCl₂</div></div>
+      <div class="row"><div class="k">Оксиды</div><div class="v">CO, SO₂, NO, N₂O</div></div>
+      <div class="row"><div class="k">Прочее</div><div class="v">NH₃, H₂O₂, Cr₂(SO₄)₃, MnSO₄</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Двойственность</span>Вещества-«оборотни»</h3>
+    <p>Элемент в <b>промежуточной</b> СО может быть и окислителем, и восстановителем.</p>
+    <div class="kv">
+      <div class="row"><div class="k">H₂O₂ (O⁻¹)</div><div class="v">с KMnO₄ — восстановитель. С PbS — окислитель</div></div>
+      <div class="row"><div class="k">SO₂, H₂SO₃ (S⁺⁴)</div><div class="v">с сильным окислителем — восстановитель. С H₂S — окислитель</div></div>
+      <div class="row"><div class="k">HNO₂, NO₂ (N⁺³, N⁺⁴)</div><div class="v">с сильным восстановителем — окислитель, с окислителем — восстановитель</div></div>
+      <div class="row"><div class="k">Fe²⁺, Sn²⁺, Cu⁺</div><div class="v">чаще восстановители (окисляются до Fe³⁺, Sn⁴⁺, Cu²⁺)</div></div>
+      <div class="row"><div class="k">S⁰, Cl₂, Br₂</div><div class="v">с металлом — окислитель, со щёлочью — диспропорционирование</div></div>
+      <div class="row"><div class="k">MnO₂ (Mn⁺⁴)</div><div class="v">с восстановителем — окислитель, с окислителем — восстановитель</div></div>
+      <div class="row"><div class="k">Cr³⁺</div><div class="v">с сильным окислителем — восстановитель (→ Cr⁶⁺)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ МАРГАНЕЦ ============ -->
+<section class="section" id="mn">
+  <h2 class="section-title">4. Соединения марганца</h2>
+
+  <div class="card">
+    <h3><span class="tag">Теория</span>Степени окисления марганца</h3>
+    <p>Марганец Mn — d-элемент VIIB группы. Проявляет степени окисления: <b>0, +2, +3, +4, +6, +7</b>.</p>
+    <div class="kv">
+      <div class="row"><div class="k">Mn⁰</div><div class="v">простое вещество Mn</div></div>
+      <div class="row"><div class="k">Mn⁺²</div><div class="v">MnSO₄, MnCl₂, Mn(NO₃)₂ — соли марганца(II). Бесцветные или бледно-розовые растворы</div></div>
+      <div class="row"><div class="k">Mn⁺³</div><div class="v">Mn₂O₃ — неустойчив, промежуточный</div></div>
+      <div class="row"><div class="k">Mn⁺⁴</div><div class="v">MnO₂ — оксид марганца(IV). Бурый осадок, амфотерный</div></div>
+      <div class="row"><div class="k">Mn⁺⁶</div><div class="v">K₂MnO₄ — манганат калия. Зелёный раствор</div></div>
+      <div class="row"><div class="k">Mn⁺⁷</div><div class="v">KMnO₄, HMnO₄ — перманганат. Фиолетовый раствор</div></div>
+    </div>
+    <div class="rule"><b>Ключевая логика:</b> в ОВР KMnO₄ (Mn⁺⁷) восстанавливается. Куда — зависит от среды. Mn⁺² в свою очередь может окисляться до MnO₂ или MnO₄⁻.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Главное правило</span>KMnO₄ в трёх средах</h3>
+    <p>Перманганат калия KMnO₄ — сильнейший окислитель. Что получится, зависит от <b>среды</b>. Это правило работает всегда.</p>
+    <div class="kv">
+      <div class="row"><div class="k">Кислая среда (H₂SO₄)</div><div class="v">Mn⁺⁷ → Mn⁺². Продукт: MnSO₄ или Mn(NO₃)₂. Бесцветный раствор</div></div>
+      <div class="row"><div class="k">Нейтральная среда (H₂O)</div><div class="v">Mn⁺⁷ → Mn⁺⁴. Продукт: MnO₂. Бурый осадок</div></div>
+      <div class="row"><div class="k">Щелочная среда (KOH)</div><div class="v">Mn⁺⁷ → Mn⁺⁶. Продукт: K₂MnO₄. Зелёный раствор</div></div>
+    </div>
+    <div class="attention"><b>Обрати внимание:</b> в кислой среде получается Mn⁺², потому что он устойчив в кислоте. В нейтральной — MnO₂, потому что он нерастворим. В щелочной — Mn⁺⁶, потому что он устойчив в щёлочи.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Кислая</span>KMnO₄ в кислой среде</h3>
+    <p>Обычно среда — H₂SO₄ (серная кислота). Mn⁺⁷ восстанавливается до Mn⁺².</p>
+    <div class="rx">2KMnO₄ + 5Na₂SO₃ + 3H₂SO₄ → 2MnSO₄ + 5Na₂SO₄ + K₂SO₄ + 3H₂O</div>
+    <div class="rx-cap"><b>Перманганат калия + сульфит натрия + серная кислота = сульфат марганца(II) + сульфат натрия + сульфат калия + вода.</b> Восстановитель — Na₂SO₃ (S⁺⁴ → S⁺⁶). Окислитель — KMnO₄ (Mn⁺⁷ → Mn⁺²).</div>
+
+    <h4>Электронный баланс</h4>
+    <div class="rx">Mn⁺⁷ + 5e⁻ → Mn⁺² | ×2
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×5
+НОК = 10</div>
+    <div class="rx-cap"><b>Марганец принимает 5 электронов, сера отдаёт 2. Умножаем на 2 и 5, чтобы уравнять.</b></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Нейтральная</span>KMnO₄ в нейтральной среде</h3>
+    <p>Среда — вода. Mn⁺⁷ восстанавливается до Mn⁺⁴, образуется бурый осадок MnO₂.</p>
+    <div class="rx">2KMnO₄ + 3Na₂SO₃ + H₂O → 2MnO₂↓ + 3Na₂SO₄ + 2KOH</div>
+    <div class="rx-cap"><b>Перманганат калия + сульфит натрия + вода = оксид марганца(IV) (бурый осадок) + сульфат натрия + гидроксид калия.</b> Mn⁺⁷ → Mn⁺⁴.</div>
+
+    <h4>Электронный баланс</h4>
+    <div class="rx">Mn⁺⁷ + 3e⁻ → Mn⁺⁴ | ×2
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×3
+НОК = 6</div>
+    <div class="rx-cap"><b>Марганец принимает 3 электрона, сера отдаёт 2. НОК(3,2) = 6.</b></div>
+
+    <div class="attention"><b>Важно:</b> в нейтральной среде образуется KOH — щёлочь. Именно поэтому после реакции среда становится щелочной. Это нужно учитывать при расстановке коэффициентов.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Щелочная</span>KMnO₄ в щелочной среде</h3>
+    <p>Среда — KOH или NaOH. Mn⁺⁷ восстанавливается до Mn⁺⁶, образуется зелёный манганат.</p>
+    <div class="rx">2KMnO₄ + Na₂SO₃ + 2KOH → 2K₂MnO₄ + Na₂SO₄ + H₂O</div>
+    <div class="rx-cap"><b>Перманганат калия + сульфит натрия + гидроксид калия = манганат калия (зелёный) + сульфат натрия + вода.</b> Mn⁺⁷ → Mn⁺⁶.</div>
+
+    <h4>Электронный баланс</h4>
+    <div class="rx">Mn⁺⁷ + 1e⁻ → Mn⁺⁶ | ×2
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×1
+НОК = 2</div>
+    <div class="rx-cap"><b>Марганец принимает 1 электрон, сера отдаёт 2. Умножаем на 2 и 1.</b></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Как понять</span>Куда пойдёт Mn⁺⁷</h3>
+    <p>Если в задании есть KMnO₄ — первым делом смотри, <b>что в среде</b>:</p>
+    <ol>
+      <li>Есть <b>H₂SO₄, HNO₃, H⁺</b> → кислая среда → продукт <b>Mn⁺²</b> (MnSO₄/Mn(NO₃)₂).</li>
+      <li>Есть <b>H₂O, нет кислоты и щёлочи</b> → нейтральная среда → продукт <b>MnO₂↓</b>.</li>
+      <li>Есть <b>KOH, NaOH, OH⁻</b> → щелочная среда → продукт <b>K₂MnO₄</b>.</li>
+    </ol>
+    <div class="warn"><b>Ловушка:</b> если в задании даны только KMnO₄ и восстановитель без среды — среда нейтральная (вода). Тогда продукт — MnO₂.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Как понять</span>Окисление Mn⁺²</h3>
+    <p>Mn⁺² — сам может быть восстановителем. Его окисляют сильные окислители (PbO₂, NaBiO₃, HNO₃(конц.)).</p>
+    <div class="rx">2MnSO₄ + 5PbO₂ + 6HNO₃ → 2HMnO₄ + 5Pb(NO₃)₂ + 2H₂SO₄ + 2H₂O</div>
+    <div class="rx-cap"><b>Сульфат марганца(II) + оксид свинца(IV) + азотная кислота = марганцевая кислота + нитрат свинца(II) + серная кислота + вода.</b> Mn⁺² → Mn⁺⁷.</div>
+    <div class="attention"><b>В школьной программе</b> окисление Mn⁺² встречается редко. В основном KMnO₄ — это окислитель.</div>
+  </div>
+</section>
+
+<!-- ============ ХРОМ ============ -->
+<section class="section" id="cr">
+  <h2 class="section-title">5. Соединения хрома</h2>
+
+  <div class="card">
+    <h3><span class="tag">Теория</span>Степени окисления хрома</h3>
+    <p>Хром Cr — d-элемент VIB группы. Проявляет степени окисления: <b>0, +2, +3, +6</b>.</p>
+    <div class="kv">
+      <div class="row"><div class="k">Cr⁰</div><div class="v">простое вещество Cr</div></div>
+      <div class="row"><div class="k">Cr⁺²</div><div class="v">CrO, CrCl₂ — неустойчивы, легко окисляются до Cr⁺³</div></div>
+      <div class="row"><div class="k">Cr⁺³</div><div class="v">Cr₂O₃, Cr(OH)₃, CrCl₃, Cr₂(SO₄)₃ — зелёные или фиолетовые соединения. Амфотерные</div></div>
+      <div class="row"><div class="k">Cr⁺⁶</div><div class="v">CrO₃, K₂CrO₄ (жёлтый), K₂Cr₂O₇ (оранжевый) — сильные окислители</div></div>
+    </div>
+    <div class="rule"><b>Ключевая логика:</b> Cr⁺⁶ — сильный окислитель, восстанавливается до Cr⁺³. Cr⁺³ может быть и окислителем (редко), и восстановителем (окисляется до Cr⁺⁶ в щелочной среде с сильным окислителем).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Цвета</span>Как узнать соединение хрома</h3>
+    <table class="color-table">
+      <tr>
+        <th>Соединение</th>
+        <th>СО хрома</th>
+        <th>Цвет</th>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#9ca3af"></span>Cr⁰ (металл)</td>
+        <td>0</td>
+        <td>Серебристо-серый</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#3b82f6"></span>CrCl₂, CrSO₄</td>
+        <td>+2</td>
+        <td>Голубой (неустойчив)</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#10b981"></span>Cr₂O₃, Cr(OH)₃</td>
+        <td>+3</td>
+        <td>Зелёный (серо-зелёный)</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#8b5cf6"></span>Cr₂(SO₄)₃, CrCl₃</td>
+        <td>+3</td>
+        <td>Фиолетовый или зелёный (зависит от гидратации)</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#eab308"></span>K₂CrO₄</td>
+        <td>+6</td>
+        <td>Жёлтый (хромат)</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#f97316"></span>K₂Cr₂O₇</td>
+        <td>+6</td>
+        <td>Оранжевый (дихромат)</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#dc2626"></span>CrO₃</td>
+        <td>+6</td>
+        <td>Тёмно-красные кристаллы</td>
+      </tr>
+    </table>
+    <div class="attention"><b>Важно:</b> жёлтый K₂CrO₄ и оранжевый K₂Cr₂O₇ — это разные формы одного и того же. В щелочной среде преобладает хромат (жёлтый), в кислой — дихромат (оранжевый).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Кислая</span>K₂Cr₂O₇ в кислой среде</h3>
+    <p>В кислой среде Cr⁺⁶ восстанавливается до Cr⁺³. Обычно среда — H₂SO₄.</p>
+    <div class="rx">K₂Cr₂O₇ + 3Na₂SO₃ + 4H₂SO₄ → Cr₂(SO₄)₃ + 3Na₂SO₄ + K₂SO₄ + 4H₂O</div>
+    <div class="rx-cap"><b>Дихромат калия + сульфит натрия + серная кислота = сульфат хрома(III) (зелёный) + сульфат натрия + сульфат калия + вода.</b> Cr⁺⁶ → Cr⁺³.</div>
+
+    <h4>Электронный баланс</h4>
+    <div class="rx">2Cr⁺⁶ + 6e⁻ → 2Cr⁺³ | ×1
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×3
+НОК = 6</div>
+    <div class="rx-cap"><b>Два атома хрома принимают 6 электронов (по 3 на каждый), сера отдаёт 2. НОК(6,2) = 6.</b></div>
+
+    <h4>Другой пример — с сероводородом</h4>
+    <div class="rx">K₂Cr₂O₇ + 3H₂S + 4H₂SO₄ → Cr₂(SO₄)₃ + 3S↓ + K₂SO₄ + 7H₂O</div>
+    <div class="rx-cap"><b>Дихромат калия + сероводород + серная кислота = сульфат хрома(III) + сера (осадок) + сульфат калия + вода.</b> S⁻² → S⁰ (отдаёт 2e⁻).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Нейтральная</span>K₂Cr₂O₇ в нейтральной или щелочной среде</h3>
+    <p>Cr⁺⁶ восстанавливается до Cr⁺³, но продукт другой — Cr(OH)₃ (серо-зелёный осадок).</p>
+    <div class="rx">K₂Cr₂O₇ + 3Na₂S + 7H₂O → 2Cr(OH)₃↓ + 3S↓ + 6NaOH + 2KOH</div>
+    <div class="rx-cap"><b>Дихромат калия + сульфид натрия + вода = гидроксид хрома(III) (осадок) + сера (осадок) + гидроксид натрия + гидроксид калия.</b> Cr⁺⁶ → Cr⁺³.</div>
+    <div class="attention"><b>В нейтральной среде</b> получается именно Cr(OH)₃ — нерастворимое основание, а не соль. Это отличает восстановление хрома от марганца.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Обратно</span>Окисление Cr⁺³ до Cr⁺⁶</h3>
+    <p>Cr⁺³ — восстановитель. Его окисляют в <b>щелочной среде</b> сильными окислителями (H₂O₂, KMnO₄, Br₂, Na₂O₂).</p>
+    <div class="rx">2CrCl₃ + 3H₂O₂ + 10KOH → 2K₂CrO₄ + 6KCl + 8H₂O</div>
+    <div class="rx-cap"><b>Хлорид хрома(III) + пероксид водорода + гидроксид калия = хромат калия (жёлтый) + хлорид калия + вода.</b> Cr⁺³ → Cr⁺⁶. H₂O₂ здесь окислитель.</div>
+
+    <div class="rx">2Cr₂(SO₄)₃ + 3Br₂ + 16KOH → 4K₂CrO₄ + 6KBr + 6K₂SO₄ + 8H₂O</div>
+    <div class="rx-cap"><b>Сульфат хрома(III) + бром + гидроксид калия = хромат калия + бромид калия + сульфат калия + вода.</b> Cr⁺³ → Cr⁺⁶. Br₂ — окислитель.</div>
+
+    <div class="warn"><b>Важно:</b> окисление Cr⁺³ до Cr⁺⁶ идёт <b>только в щелочной среде</b>. В кислой среде Cr³⁺ устойчив и не окисляется.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сравнение</span>Марганец vs Хром</h3>
+    <table class="color-table">
+      <tr>
+        <th>Среда</th>
+        <th>KMnO₄ (Mn⁺⁷)</th>
+        <th>K₂Cr₂O₇ (Cr⁺⁶)</th>
+      </tr>
+      <tr>
+        <td>Кислая (H⁺)</td>
+        <td>Mn⁺⁷ → Mn⁺² (бесцв.)</td>
+        <td>Cr⁺⁶ → Cr⁺³ (зелёный)</td>
+      </tr>
+      <tr>
+        <td>Нейтральная (H₂O)</td>
+        <td>Mn⁺⁷ → Mn⁺⁴ (MnO₂↓ бурый)</td>
+        <td>Cr⁺⁶ → Cr⁺³ (Cr(OH)₃↓ серо-зелёный)</td>
+      </tr>
+      <tr>
+        <td>Щелочная (OH⁻)</td>
+        <td>Mn⁺⁷ → Mn⁺⁶ (K₂MnO₄ зелёный)</td>
+        <td>Cr⁺⁶ → Cr⁺³ (Cr(OH)₃↓)</td>
+      </tr>
+    </table>
+    <div class="rule"><b>Логика:</b> марганец меняет продукт при смене среды (Mn⁺² / MnO₂ / K₂MnO₄). Хром всегда восстанавливается до Cr⁺³, но продукт зависит от среды (соль или гидроксид).</div>
+  </div>
+</section>
+
+<!-- ============ КАК ПОНЯТЬ ПРОДУКТ ============ -->
+<section class="section" id="how">
+  <h2 class="section-title">6. Как понять, что получится</h2>
+
+  <div class="card">
+    <h3><span class="tag">Метод</span>Пошаговая логика</h3>
+    <ol>
+      <li><b>Определи степени окисления всех элементов</b> в реагентах.</li>
+      <li><b>Найди элементы, которые меняют СО.</b> Это будут окислитель и восстановитель.</li>
+      <li><b>Посмотри, кто окислитель, кто восстановитель.</b> Окислитель — понижает СО. Восстановитель — повышает.</li>
+      <li><b>Определи среду:</b> кислая, нейтральная, щелочная.</li>
+      <li><b>По среде определи продукт</b> окислителя (для KMnO₄ и K₂Cr₂O₇ — см. таблицы выше).</li>
+      <li><b>По восстановителю определи продукт</b> — до какой СО он окислится (обычно до максимальной устойчивой).</li>
+      <li><b>Составь электронный баланс</b> — определи, сколько e⁻ отдаёт восстановитель и сколько принимает окислитель.</li>
+      <li><b>Уравняй через НОК,</b> расставь коэффициенты.</li>
+      <li><b>Проверь по H и O.</b></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило</span>До какой СО окисляется восстановитель</h3>
+    <p>Восстановитель обычно окисляется до <b>максимальной устойчивой</b> степени окисления:</p>
+    <div class="kv">
+      <div class="row"><div class="k">S⁻² (H₂S, сульфиды)</div><div class="v">→ S⁰ (при слабом окислителе) или S⁺⁶ (при сильном, в кислоте)</div></div>
+      <div class="row"><div class="k">S⁺⁴ (SO₂, сульфиты)</div><div class="v">→ S⁺⁶ (сульфаты)</div></div>
+      <div class="row"><div class="k">N⁻³ (NH₃)</div><div class="v">→ N₂ (при окислении) или NO (при катализе)</div></div>
+      <div class="row"><div class="k">Fe⁺² (FeSO₄)</div><div class="v">→ Fe⁺³</div></div>
+      <div class="row"><div class="k">Cr⁺³</div><div class="v">→ Cr⁺⁶ (только в щелочной среде)</div></div>
+      <div class="row"><div class="k">Mn⁺²</div><div class="v">→ Mn⁺⁴ или Mn⁺⁷ (очень сильные окислители)</div></div>
+      <div class="row"><div class="k">I⁻</div><div class="v">→ I₂</div></div>
+      <div class="row"><div class="k">Cl⁻</div><div class="v">→ Cl₂ (только сильные окислители)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило</span>До какой СО восстанавливается окислитель</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Mn⁺⁷ (KMnO₄)</div><div class="v">кислая → Mn⁺², нейтр. → Mn⁺⁴, щел. → Mn⁺⁶</div></div>
+      <div class="row"><div class="k">Cr⁺⁶ (K₂Cr₂O₇)</div><div class="v">кислая → Cr⁺³ (соль), нейтр./щел. → Cr⁺³ (Cr(OH)₃)</div></div>
+      <div class="row"><div class="k">N⁺⁵ (HNO₃)</div><div class="v">конц. → N⁺⁴ (NO₂). Разб. + неактивный → N⁺² (NO). Разб. + активный → N⁰ (N₂) или N⁻³ (NH₄⁺)</div></div>
+      <div class="row"><div class="k">S⁺⁶ (H₂SO₄ конц.)</div><div class="v">неактивный Me → S⁺⁴ (SO₂). Средний → S⁰. Активный → S⁻² (H₂S)</div></div>
+      <div class="row"><div class="k">Cl⁰ (Cl₂)</div><div class="v">→ Cl⁻</div></div>
+      <div class="row"><div class="k">O⁻¹ (H₂O₂)</div><div class="v">→ O⁻² (H₂O)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Определение среды</span>Как понять, кислая, нейтральная или щелочная</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Кислая</div><div class="v">в списке есть H₂SO₄, HNO₃, HCl, H⁺</div></div>
+      <div class="row"><div class="k">Щелочная</div><div class="v">в списке есть KOH, NaOH, Ba(OH)₂, OH⁻</div></div>
+      <div class="row"><div class="k">Нейтральная</div><div class="v">есть только H₂O, или среда не указана</div></div>
+    </div>
+    <div class="attention"><b>В задании 29</b> среда почти всегда задана одним из веществ. Если среда не указана, а есть только вода — среда нейтральная.</div>
+  </div>
+</section>
+
+<!-- ============ АЛГОРИТМ ============ -->
+<section class="section" id="algo">
+  <h2 class="section-title">7. Алгоритм решения задания 29</h2>
+
+  <div class="card">
+    <h3><span class="tag">Пошагово</span>6 шагов</h3>
+    <ol>
+      <li><b>Выпиши вещества из условия.</b> Их обычно 5–6.</li>
+      <li><b>Определи, кто окислитель, кто восстановитель.</b> Используй таблицы из разделов 3–5.</li>
+      <li><b>Выбери пару, которая может реагировать.</b> Учитывай среду и совместимость.</li>
+      <li><b>Составь электронный баланс.</b> Найди, кто сколько e⁻ отдаёт и принимает. Уравняй через НОК.</li>
+      <li><b>Расставь коэффициенты в уравнении.</b> Проверь все атомы.</li>
+      <li><b>Запиши ответ:</b> уравнение + окислитель + восстановитель.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило</span>Как выбрать пару веществ</h3>
+    <p>Из списка веществ нужно выбрать <b>два</b>, которые прореагируют. Логика:</p>
+    <ul>
+      <li>Окислитель + восстановитель.</li>
+      <li>Должны подходить по среде: например, если окислитель KMnO₄ и есть H₂SO₄ — среда кислая, продукт Mn⁺².</li>
+      <li>Не должны реагировать друг с другом раньше (например, две кислоты между собой).</li>
+    </ul>
+    <div class="rule"><b>Типичная ошибка:</b> выбрать два окислителя или два восстановителя. Реакция между ними не пойдёт — оба хотят забрать или отдать электроны.</div>
+  </div>
+</section>
+
+<!-- ============ ПРИМЕРЫ ============ -->
+<section class="section" id="practice">
+  <h2 class="section-title">8. Примеры решения</h2>
+
+  <div class="card">
+    <h3><span class="tag">Пример 1</span>С марганцем</h3>
+    <p><b>Дано:</b> KMnO₄, Na₂SO₃, H₂SO₄, H₂O, KOH.</p>
+
+    <h4>Шаг 1. Кто есть кто</h4>
+    <p>KMnO₄ — окислитель (Mn⁺⁷). Na₂SO₃ — восстановитель (S⁺⁴). H₂SO₄ — кислая среда.</p>
+
+    <h4>Шаг 2. Среда</h4>
+    <p>Есть H₂SO₄ → среда кислая → Mn⁺⁷ → Mn⁺².</p>
+
+    <h4>Шаг 3. Электронный баланс</h4>
+    <div class="rx">Mn⁺⁷ + 5e⁻ → Mn⁺² | ×2
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×5
+НОК(5,2) = 10</div>
+
+    <h4>Шаг 4. Уравнение</h4>
+    <div class="rx">2KMnO₄ + 5Na₂SO₃ + 3H₂SO₄ → 2MnSO₄ + 5Na₂SO₄ + K₂SO₄ + 3H₂O</div>
+
+    <h4>Шаг 5. Ответ</h4>
+    <div class="ex">
+      Окислитель: KMnO₄ (Mn⁺⁷).<br>
+      Восстановитель: Na₂SO₃ (S⁺⁴).
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 2</span>С хромом</h3>
+    <p><b>Дано:</b> K₂Cr₂O₇, H₂S, H₂SO₄, H₂O, KOH.</p>
+
+    <h4>Шаг 1. Кто есть кто</h4>
+    <p>K₂Cr₂O₇ — окислитель (Cr⁺⁶). H₂S — восстановитель (S⁻²). H₂SO₄ — кислая среда.</p>
+
+    <h4>Шаг 2. Среда</h4>
+    <p>Есть H₂SO₄ → кислая → Cr⁺⁶ → Cr⁺³. S⁻² окисляется до S⁰ (H₂S — слабый восстановитель).</p>
+
+    <h4>Шаг 3. Электронный баланс</h4>
+    <div class="rx">2Cr⁺⁶ + 6e⁻ → 2Cr⁺³ | ×1
+S⁻² − 2e⁻ → S⁰ | ×3
+НОК(6,2) = 6</div>
+
+    <h4>Шаг 4. Уравнение</h4>
+    <div class="rx">K₂Cr₂O₇ + 3H₂S + 4H₂SO₄ → Cr₂(SO₄)₃ + 3S↓ + K₂SO₄ + 7H₂O</div>
+
+    <h4>Шаг 5. Ответ</h4>
+    <div class="ex">
+      Окислитель: K₂Cr₂O₇ (Cr⁺⁶).<br>
+      Восстановитель: H₂S (S⁻²).
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 3</span>Со щелочной средой</h3>
+    <p><b>Дано:</b> KMnO₄, Na₂SO₃, KOH, H₂O, H₂SO₄.</p>
+
+    <h4>Шаг 1. Кто есть кто</h4>
+    <p>KMnO₄ — окислитель (Mn⁺⁷). Na₂SO₃ — восстановитель (S⁺⁴). KOH — щелочная среда.</p>
+
+    <h4>Шаг 2. Среда</h4>
+    <p>Есть KOH → щелочная → Mn⁺⁷ → Mn⁺⁶ (K₂MnO₄).</p>
+
+    <h4>Шаг 3. Электронный баланс</h4>
+    <div class="rx">Mn⁺⁷ + 1e⁻ → Mn⁺⁶ | ×2
+S⁺⁴ − 2e⁻ → S⁺⁶ | ×1
+НОК = 2</div>
+
+    <h4>Шаг 4. Уравнение</h4>
+    <div class="rx">2KMnO₄ + Na₂SO₃ + 2KOH → 2K₂MnO₄ + Na₂SO₄ + H₂O</div>
+
+    <h4>Шаг 5. Ответ</h4>
+    <div class="ex">
+      Окислитель: KMnO₄ (Mn⁺⁷).<br>
+      Восстановитель: Na₂SO₃ (S⁺⁴).
+    </div>
+  </div>
+</section>
+
+<!-- ============ ЛОВУШКИ ============ -->
+<section class="section" id="traps">
+  <h2 class="section-title">9. Ловушки ЕГЭ</h2>
+
+  <div class="card">
+    <h3><span class="tag">Топ-10</span>На чём теряют баллы</h3>
+    <ul>
+      <li><b>HNO₃ никогда не даёт H₂.</b> Даже с активными металлами. Всегда NO₂ / NO / N₂O / N₂ / NH₄NO₃.</li>
+      <li><b>Пассивация Al, Cr, Fe.</b> С конц. HNO₃ и H₂SO₄ без нагрева — не реагируют.</li>
+      <li><b>Fe + I₂ → FeI₂</b> (не FeI₃). Йод слабый окислитель, даёт только Fe²⁺.</li>
+      <li><b>2Cu + I₂ → 2CuI</b> (не CuI₂). Медь окисляется до Cu⁺.</li>
+      <li><b>KMnO₄ в разных средах даёт разные продукты.</b> Кислая → Mn⁺². Нейтральная → MnO₂. Щелочная → K₂MnO₄.</li>
+      <li><b>K₂Cr₂O₇ всегда даёт Cr⁺³,</b> но в нейтральной — Cr(OH)₃, а в кислой — соль.</li>
+      <li><b>Cr³⁺ окисляется до Cr⁶⁺ только в щелочной среде.</b> В кислой — нет.</li>
+      <li><b>Продукты HNO₃ зависят от концентрации.</b> Разб. + активный металл → N₂ / NH₄NO₃, а не NO₂.</li>
+      <li><b>Обязательно укажи окислитель и восстановитель</b> в ответе. Без этого — минус балл.</li>
+      <li><b>Проверь баланс по H и O</b> после расстановки коэффициентов.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Отдельно</span>Сера и её соединения</h3>
+    <ul>
+      <li>H₂S + слабый окислитель → S⁰ (например, с Fe³⁺, I₂).</li>
+      <li>H₂S + сильный окислитель в кислоте → H₂SO₄ (например, с Cl₂ в избытке).</li>
+      <li>SO₂ + сильный окислитель → S⁺⁶ (сульфат).</li>
+      <li>SO₂ + H₂S → S⁰ (встреча двух СО серы).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Отдельно</span>Азот</h3>
+    <ul>
+      <li>NH₃ + O₂ без кат. → N₂ + H₂O.</li>
+      <li>NH₃ + O₂ с Pt → NO + H₂O.</li>
+      <li>HNO₂ — и окислитель, и восстановитель.</li>
+      <li>NH₄NO₂ → N₂ + H₂O (внутримолекулярная ОВР).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · ВИЗУАЛЬНЫЕ ПРИЗНАКИ ============ -->
+<section class="section" id="visual">
+  <h2 class="section-title">10. Визуальные признаки ОВР — что видно глазами</h2>
+
+  <div class="card">
+    <h3><span class="tag">Важно</span>Почему это критично для ЕГЭ</h3>
+    <div class="def">В современном задании 29 часто просят выбрать реакцию <b>с определённым визуальным признаком</b>: «с изменением цвета раствора», «с выделением газа», «с выпадением осадка», «без видимых изменений».</div>
+    <p>Поэтому надо знать <b>не только формулы, но и что видно глазами</b>. На ОГЭ и старом ЕГЭ это не требовалось, а сейчас — обязательно.</p>
+    <div class="warn"><b>Ловушка:</b> если в условии сказано «с изменением цвета раствора, без осадка и газа» — реакция с образованием осадка или газа <b>не подойдёт</b>, даже если она правильная химически.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Таблица</span>KMnO₄ — признаки в трёх средах</h3>
+    <table class="color-table">
+      <tr>
+        <th>Среда</th>
+        <th>Продукт</th>
+        <th>Что видно</th>
+      </tr>
+      <tr>
+        <td><b>Кислая</b> (H₂SO₄)</td>
+        <td>Mn⁺² (MnSO₄, Mn(NO₃)₂)</td>
+        <td>Обесцвечивание тёмно-фиолетового раствора. Осадка нет</td>
+      </tr>
+      <tr>
+        <td><b>Нейтральная</b> (H₂O)</td>
+        <td>Mn⁺⁴ (MnO₂↓)</td>
+        <td>Обесцвечивание + выпадение <span class="dot" style="background:#7c4a1e"></span> бурого осадка MnO₂</td>
+      </tr>
+      <tr>
+        <td><b>Щелочная</b> (KOH)</td>
+        <td>Mn⁺⁶ (K₂MnO₄)</td>
+        <td>Раствор становится <span class="dot" style="background:#16a34a"></span> зелёным. Осадка нет</td>
+      </tr>
+    </table>
+    <div class="rule"><b>Как использовать:</b> если в задании сказано «изменение цвета без осадка» — бери кислую или щелочную среду. Если «с выпадением осадка» — нейтральную.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Таблица</span>K₂Cr₂O₇ и K₂CrO₄ — признаки</h3>
+    <table class="color-table">
+      <tr>
+        <th>Среда</th>
+        <th>Продукт</th>
+        <th>Что видно</th>
+      </tr>
+      <tr>
+        <td><b>Кислая</b> (H₂SO₄)</td>
+        <td>Cr⁺³ (Cr₂(SO₄)₃, CrCl₃)</td>
+        <td>Из <span class="dot" style="background:#f97316"></span> оранжевого становится <span class="dot" style="background:#16a34a"></span> зелёным</td>
+      </tr>
+      <tr>
+        <td><b>Нейтральная</b> (H₂O)</td>
+        <td>Cr⁺³ (Cr(OH)₃↓)</td>
+        <td>Выпадение <span class="dot" style="background:#6b7280"></span> серо-зелёного осадка, обесцвечивание</td>
+      </tr>
+      <tr>
+        <td><b>Щелочная</b> (KOH)</td>
+        <td>Cr⁺³ (Cr(OH)₃↓ или K₃[Cr(OH)₆])</td>
+        <td>Выпадение осадка (или растворение в избытке щёлочи — зелёный раствор)</td>
+      </tr>
+    </table>
+    <div class="attention"><b>Важно:</b> дихромат (K₂Cr₂O₇) — <b>оранжевый</b>. Хромат (K₂CrO₄) — <b>жёлтый</b>. При подкислении хромат переходит в дихромат: жёлтый → оранжевый (цвет меняется, но СО хрома не меняется — это не ОВР).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сводка</span>Признаки типичных реакций</h3>
+    <table class="color-table">
+      <tr>
+        <th>Что образуется</th>
+        <th>Признак</th>
+      </tr>
+      <tr>
+        <td>MnO₂ (оксид марганца IV)</td>
+        <td><span class="dot" style="background:#7c4a1e"></span> Бурый осадок</td>
+      </tr>
+      <tr>
+        <td>Cr(OH)₃ (гидроксид хрома III)</td>
+        <td><span class="dot" style="background:#6b7280"></span> Серо-зелёный осадок</td>
+      </tr>
+      <tr>
+        <td>Cr₂(SO₄)₃, CrCl₃ (соли Cr³⁺)</td>
+        <td><span class="dot" style="background:#16a34a"></span> Зелёный или <span class="dot" style="background:#8b5cf6"></span> фиолетовый раствор</td>
+      </tr>
+      <tr>
+        <td>K₂MnO₄ (манганат)</td>
+        <td><span class="dot" style="background:#16a34a"></span> Зелёный раствор</td>
+      </tr>
+      <tr>
+        <td>K₂CrO₄ (хромат)</td>
+        <td><span class="dot" style="background:#eab308"></span> Жёлтый раствор</td>
+      </tr>
+      <tr>
+        <td>K₂Cr₂O₇ (дихромат)</td>
+        <td><span class="dot" style="background:#f97316"></span> Оранжевый раствор</td>
+      </tr>
+      <tr>
+        <td>S↓ (сера)</td>
+        <td><span class="dot" style="background:#eab308"></span> Жёлтый осадок</td>
+      </tr>
+      <tr>
+        <td>I₂ (йод)</td>
+        <td><span class="dot" style="background:#7c3aed"></span> Тёмно-фиолетовый осадок / бурый раствор</td>
+      </tr>
+      <tr>
+        <td>Br₂ (бром)</td>
+        <td><span class="dot" style="background:#dc2626"></span> Бурая жидкость / оранжевый раствор</td>
+      </tr>
+      <tr>
+        <td>Cl₂, NO₂</td>
+        <td>Газ с характерным цветом и запахом</td>
+      </tr>
+      <tr>
+        <td>CO₂, SO₂, H₂S, NH₃</td>
+        <td>Выделение газа (без цвета или с запахом)</td>
+      </tr>
+      <tr>
+        <td>H₂</td>
+        <td>Бесцветный газ, легко воспламеняется</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Алгоритм</span>Как решать задание с признаком</h3>
+    <ol>
+      <li><b>Прочитай условие.</b> Что требуется: изменение цвета? газ? осадок? без изменений?</li>
+      <li><b>Выпиши вещества из списка.</b> Определи, кто окислитель, кто восстановитель.</li>
+      <li><b>Посмотри на признак.</b> Подходит ли реакция под условие?</li>
+      <li><b>Проверь среду.</b> Если окислитель KMnO₄ и нужен осадок — среда должна быть нейтральной. Если нужен зелёный цвет — щелочной.</li>
+      <li><b>Составь баланс и уравняй.</b> Укажи окислитель и восстановитель.</li>
+    </ol>
+    <div class="ex"><b>Пример из ЕГЭ:</b> «реакция идёт с изменением цвета раствора, без выделения осадка и газа». KMnO₄ + Na₂SO₃ + H₂SO₄ подойдёт — обесцвечивание, без осадка. А KMnO₄ + Na₂SO₃ + H₂O — не подойдёт, потому что образуется бурый осадок MnO₂.</div>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · ДИСПРОПОРЦИОНИРОВАНИЕ ============ -->
+<section class="section" id="disprop">
+  <h2 class="section-title">11. Диспропорционирование</h2>
+
+  <div class="card">
+    <h3><span class="tag">Определение</span>Что это такое</h3>
+    <div class="def"><b>Диспропорционирование</b> — реакция, в которой <b>один и тот же элемент</b> является и окислителем, и восстановителем. Один атом этого элемента повышает СО, другой — понижает.</div>
+    <p><b>Когда происходит:</b> когда элемент находится в <b>промежуточной</b> СО и может одновременно двигаться и вверх, и вниз.</p>
+    <div class="ex"><b>Простой пример:</b> Cl₂ + 2KOH → KCl + KClO + H₂O. Хлор был Cl⁰, стал Cl⁻¹ и Cl⁺¹.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сера и фосфор</span>Со щелочами</h3>
+    <div class="rx">3S + 6KOH → 2K₂S + K₂SO₃ + 3H₂O</div>
+    <div class="rx-cap"><b>Сера + гидроксид калия = сульфид калия + сульфит калия + вода.</b> S⁰ → S⁻² (понижение) и S⁰ → S⁺⁴ (повышение). Реакция идёт при кипячении.</div>
+
+    <div class="rx">4P + 3KOH + 3H₂O → PH₃↑ + 3KH₂PO₂</div>
+    <div class="rx-cap"><b>Фосфор + гидроксид калия + вода = фосфин (газ) + гипофосфит калия.</b> P⁰ → P⁻³ (понижение) и P⁰ → P⁺¹ (повышение). При кипячении.</div>
+
+    <div class="attention"><b>Запомни:</b> идёт только при кипячении. При обычной температуре сера и фосфор со щелочами не реагируют.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Галогены</span>С водой и щелочами</h3>
+    <p><b>Без нагревания:</b></p>
+    <div class="rx">Cl₂ + H₂O → HCl + HClO</div>
+    <div class="rx-cap"><b>Хлор + вода = соляная кислота + хлорноватистая кислота.</b> Cl⁰ → Cl⁻¹ и Cl⁰ → Cl⁺¹.</div>
+
+    <div class="rx">Cl₂ + 2KOH → KCl + KClO + H₂O</div>
+    <div class="rx-cap"><b>Хлор + гидроксид калия (холод) = хлорид калия + гипохлорит калия + вода.</b></div>
+
+    <p><b>При нагревании:</b></p>
+    <div class="rx">3Cl₂ + 6KOH → 5KCl + KClO₃ + 3H₂O</div>
+    <div class="rx-cap"><b>Хлор + гидроксид калия (нагрев) = хлорид калия + хлорат калия + вода.</b> В горячей щёлочи хлор окисляется сразу до +5.</div>
+
+    <div class="warn"><b>Ловушка:</b> фтор со щелочами не диспропорционирует — он слишком сильный окислитель. F₂ + 2KOH → 2KF + O₂ + H₂O (окисляет кислород щёлочи, а не себя).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Азот</span>NO₂ и соли</h3>
+    <div class="rx">2NO₂ + H₂O → HNO₂ + HNO₃</div>
+    <div class="rx-cap"><b>Оксид азота(IV) + вода = азотистая кислота + азотная кислота.</b> N⁺⁴ → N⁺³ и N⁺⁴ → N⁺⁵.</div>
+
+    <div class="rx">2NO₂ + 2KOH → KNO₂ + KNO₃ + H₂O</div>
+    <div class="rx-cap"><b>Оксид азота(IV) + гидроксид калия = нитрит калия + нитрат калия + вода.</b></div>
+
+    <div class="rx">4KClO₃ → 3KClO₄ + KCl</div>
+    <div class="rx-cap"><b>Хлорат калия при нагревании = перхлорат калия + хлорид калия.</b> Cl⁺⁵ → Cl⁺⁷ и Cl⁺⁵ → Cl⁻¹.</div>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · ПОВЫШЕНИЕ СО Cr И Mn ============ -->
+<section class="section" id="raise">
+  <h2 class="section-title">12. Повышение СО хрома и марганца</h2>
+
+  <div class="card">
+    <h3><span class="tag">Теория</span>Обратный процесс</h3>
+    <p>Мы разбирали, как KMnO₄ и K₂Cr₂O₇ <b>окисляют</b> другие вещества и сами восстанавливаются. Но бывает и наоборот: <b>Cr³⁺ и Mn²⁺</b> могут быть <b>восстановителями</b> и окисляться до высших СО.</p>
+    <div class="rule"><b>Ключевая логика:</b> окислить Cr³⁺ до Cr⁶⁺ можно только <b>в щелочной среде</b> очень сильными окислителями (H₂O₂, Br₂, Na₂O₂, KMnO₄, хлорсодержащие соли). В кислой среде Cr³⁺ устойчив и не окисляется.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Cr³⁺ → Cr⁶⁺</span>В щелочной среде</h3>
+    <div class="rx">2CrCl₃ + 3H₂O₂ + 10KOH → 2K₂CrO₄ + 6KCl + 8H₂O</div>
+    <div class="rx-cap"><b>Хлорид хрома(III) + пероксид водорода + гидроксид калия = хромат калия (жёлтый) + хлорид калия + вода.</b> Cr⁺³ → Cr⁺⁶, H₂O₂ — окислитель (O⁻¹ → O⁻²).</div>
+
+    <div class="rx">2Cr₂(SO₄)₃ + 3Br₂ + 16KOH → 4K₂CrO₄ + 6KBr + 6K₂SO₄ + 8H₂O</div>
+    <div class="rx-cap"><b>Сульфат хрома(III) + бром + гидроксид калия = хромат калия + бромид калия + сульфат калия + вода.</b> Cr⁺³ → Cr⁺⁶, Br₂ — окислитель (Br⁰ → Br⁻¹).</div>
+
+    <div class="rx">2Cr(OH)₃ + 3Na₂O₂ → 2Na₂CrO₄ + 2NaOH + 2H₂O</div>
+    <div class="rx-cap"><b>Гидроксид хрома(III) + пероксид натрия = хромат натрия + гидроксид натрия + вода.</b> Cr⁺³ → Cr⁺⁶.</div>
+
+    <p><b>В кислой среде:</b> Cr³⁺ не окисляется. Остаётся Cr³⁺ (в виде Cr₂(SO₄)₃, CrCl₃ и т.д.).</p>
+    <div class="warn"><b>Ловушка:</b> если в задании среда кислая — не пытайся окислить Cr³⁺. Окисление возможно <b>только в щёлочи</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Mn²⁺ → Mn⁷⁺</span>Очень сильные окислители</h3>
+    <p>Mn²⁺ — восстановитель. Его окисляют <b>PbO₂</b>, <b>NaBiO₃</b>, концентрированная HNO₃.</p>
+    <div class="rx">2MnSO₄ + 5PbO₂ + 6HNO₃ → 2HMnO₄ + 5Pb(NO₃)₂ + 2H₂SO₄ + 2H₂O</div>
+    <div class="rx-cap"><b>Сульфат марганца(II) + оксид свинца(IV) + азотная кислота = марганцевая кислота + нитрат свинца(II) + серная кислота + вода.</b> Mn⁺² → Mn⁺⁷. PbO₂ — окислитель.</div>
+
+    <div class="attention"><b>В школьной программе</b> окисление Mn²⁺ встречается редко. Запомни главное: KMnO₄ — это <b>окислитель</b>, а не восстановитель. Восстановителем он бывает только в очень специфических случаях.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сводка</span>Что в какую сторону</h3>
+    <table class="color-table">
+      <tr>
+        <th>Что окисляем</th>
+        <th>До чего</th>
+        <th>Условия</th>
+      </tr>
+      <tr>
+        <td>Cr³⁺</td>
+        <td>Cr⁶⁺ (хромат/дихромат)</td>
+        <td>Щелочная среда + сильный окислитель</td>
+      </tr>
+      <tr>
+        <td>Mn²⁺</td>
+        <td>Mn⁴⁺ (MnO₂)</td>
+        <td>Сильные окислители, часто в щелочи</td>
+      </tr>
+      <tr>
+        <td>Mn²⁺</td>
+        <td>Mn⁷⁺ (MnO₄⁻, HMnO₄)</td>
+        <td>PbO₂, NaBiO₃, HNO₃ конц.</td>
+      </tr>
+      <tr>
+        <td>Cr⁶⁺ (K₂Cr₂O₇)</td>
+        <td>Cr³⁺</td>
+        <td>Восстановитель в кислой/нейтральной среде</td>
+      </tr>
+      <tr>
+        <td>Mn⁷⁺ (KMnO₄)</td>
+        <td>Mn²⁺ / Mn⁴⁺ / Mn⁶⁺</td>
+        <td>Зависит от среды — кислая / нейтр. / щелочная</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · АКТИВНОСТЬ МЕТАЛЛОВ ============ -->
+<section class="section" id="activity">
+  <h2 class="section-title">13. Активность металлов и неметаллов</h2>
+
+  <div class="card">
+    <h3><span class="tag">Ряд напряжений</span>Электрохимический ряд металлов</h3>
+    <p>Чем <b>левее</b> металл в ряду — тем он <b>активнее</b> и тем сильнее как восстановитель.</p>
+    <div class="rx" style="white-space:normal;line-height:1.8">
+      Li → Rb → K → Ba → Sr → Ca → Na → Mg → Al → Mn → Zn → Cr → Fe → Cd → Co → Ni → Sn → Pb → <b>H₂</b> → Sb → Bi → Cu → Hg → Ag → Pd → Pt → Au
+    </div>
+    <div class="rx-cap"><b>Металлы левее H₂ вытесняют водород из кислот-неокислителей</b> (HCl, H₂SO₄ разб.). Металлы правее H₂ с такими кислотами не реагируют.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Группы</span>Активные, средние, неактивные</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Активные</div><div class="v">Li, K, Ba, Sr, Ca, Na, Mg, Al. Реагируют с водой, вытесняют H₂ из кислот, вытесняют другие металлы из солей</div></div>
+      <div class="row"><div class="k">Средней активности</div><div class="v">Mn, Zn, Cr, Fe, Cd, Co, Ni, Sn, Pb. Реагируют с кислотами, но не с водой</div></div>
+      <div class="row"><div class="k">Неактивные</div><div class="v">Cu, Hg, Ag, Pd, Pt, Au. Не реагируют с кислотами-неокислителями. Реагируют с HNO₃, H₂SO₄(конц.), царской водкой</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Неметаллы</span>Активность и окислительная способность</h3>
+    <p>Чем <b>выше и правее</b> неметалл в таблице Менделеева — тем сильнее он как окислитель:</p>
+    <div class="rx" style="white-space:normal;line-height:1.8">
+      F₂ > O₂ > Cl₂ > Br₂ > I₂ > S > P > C > Si > H₂
+    </div>
+    <div class="rule"><b>Правило:</b> более активный неметалл вытесняет менее активный из его соединений (например, Cl₂ + 2KBr → 2KCl + Br₂).</div>
+
+    <h4>Электроотрицательность — точные значения</h4>
+    <table class="color-table">
+      <tr>
+        <th>Элемент</th>
+        <th>X</th>
+        <th>Элемент</th>
+        <th>X</th>
+      </tr>
+      <tr><td>Cs</td><td>0,79</td><td>C</td><td>2,55</td></tr>
+      <tr><td>K</td><td>0,82</td><td>S</td><td>2,58</td></tr>
+      <tr><td>Na</td><td>0,93</td><td>I</td><td>2,66</td></tr>
+      <tr><td>Li</td><td>0,98</td><td>Br</td><td>2,96</td></tr>
+      <tr><td>Ca</td><td>1,0</td><td>N</td><td>3,04</td></tr>
+      <tr><td>Mg</td><td>1,31</td><td>Cl</td><td>3,16</td></tr>
+      <tr><td>Be</td><td>1,57</td><td>O</td><td>3,44</td></tr>
+      <tr><td>Si</td><td>1,90</td><td>F</td><td>3,98</td></tr>
+      <tr><td>B</td><td>2,04</td><td></td><td></td></tr>
+      <tr><td>P</td><td>2,19</td><td></td><td></td></tr>
+    </table>
+    <div class="attention"><b>Обрати внимание:</b> по таблице хлор (3,16) электроотрицательнее азота (3,04). Но в ЕГЭ считается, что азот — более активный неметалл, чем хлор. Это редкий случай, когда приходится следовать логике ФИПИ, а не справочникам.</div>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · ОСОБЫЕ СЛУЧАИ ============ -->
+<section class="section" id="special">
+  <h2 class="section-title">14. Особые случаи окислителей и восстановителей</h2>
+
+  <div class="card">
+    <h3><span class="tag">Правило 1</span>Кислородсодержащие соли и кислоты хлора</h3>
+    <p>В реакциях с восстановителями <b>всегда переходят в хлориды</b> (Cl⁻):</p>
+    <div class="kv">
+      <div class="row"><div class="k">HClO, HClO₂, HClO₃, HClO₄</div><div class="v">Cl⁺¹, Cl⁺³, Cl⁺⁵, Cl⁺⁷ → Cl⁻¹</div></div>
+      <div class="row"><div class="k">KClO, KClO₃, KClO₄</div><div class="v">→ KCl</div></div>
+    </div>
+    <div class="ex"><b>Пример:</b> KClO₃ + 6HCl → KCl + 3Cl₂↑ + 3H₂O. Хлор из +5 идёт в −1 (в KCl) и в 0 (в Cl₂).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило 2</span>Встреча двух СО одного элемента</h3>
+    <p>Если в реакции участвуют вещества, где <b>один и тот же элемент</b> имеет <b>отрицательную</b> и <b>положительную</b> СО — они «встречаются» в <b>нулевой</b> СО. Выделяется простое вещество.</p>
+    <div class="rx">2H₂S + SO₂ → 3S↓ + 2H₂O</div>
+    <div class="rx-cap"><b>Сероводород + оксид серы(IV) = сера (осадок) + вода.</b> S⁻² и S⁺⁴ «встречаются» в S⁰.</div>
+
+    <div class="rx">5HCl + HClO₃ → 3Cl₂↑ + 3H₂O</div>
+    <div class="rx-cap"><b>Соляная кислота + хлорноватая кислота = хлор (газ) + вода.</b> Cl⁻¹ и Cl⁺⁵ «встречаются» в Cl⁰.</div>
+
+    <div class="rx">NH₄NO₂ → N₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Нитрит аммония (при нагревании) = азот (газ) + вода.</b> N⁻³ и N⁺³ «встречаются» в N⁰. Внутримолекулярная ОВР.</div>
+
+    <div class="rx">NH₄NO₃ → N₂O↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Нитрат аммония (при нагревании) = оксид азота(I) + вода.</b> N⁻³ и N⁺⁵ → N⁺¹. Исключение: не N₂, а N₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило 3</span>Пероксид водорода — «оборотень»</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Как окислитель (O⁻¹ → O⁻²)</div><div class="v">Продукт — H₂O. С восстановителями: PbS, KI, Na₂SO₃</div></div>
+      <div class="row"><div class="k">Как восстановитель (O⁻¹ → O⁰)</div><div class="v">Продукт — O₂↑. С окислителями: KMnO₄, K₂Cr₂O₇</div></div>
+    </div>
+    <div class="rx">PbS + 4H₂O₂ → PbSO₄ + 4H₂O</div>
+    <div class="rx-cap"><b>Сульфид свинца + пероксид водорода = сульфат свинца + вода.</b> H₂O₂ — окислитель, восстанавливается до воды.</div>
+
+    <div class="rx">2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + K₂SO₄ + 5O₂↑ + 8H₂O</div>
+    <div class="rx-cap"><b>Перманганат калия + пероксид водорода + серная кислота = сульфат марганца(II) + сульфат калия + кислород (газ) + вода.</b> H₂O₂ — восстановитель, окисляется до O₂.</div>
+  </div>
+</section>
+
+<!-- ============ ДОПОЛНЕНИЕ · КАК ПРОВЕРИТЬ СЕБЯ ============ -->
+<section class="section" id="check">
+  <h2 class="section-title">15. Как проверить себя в задании 29</h2>
+
+  <div class="card">
+    <h3><span class="tag">Чек-лист</span>7 пунктов перед сдачей</h3>
+    <ol>
+      <li><b>Есть ли в реакции и окислитель, и восстановитель?</b> Если чего-то нет — реакция неверна.</li>
+      <li><b>Правильно ли определены степени окисления?</b> Проверь каждое вещество, особенно в органике.</li>
+      <li><b>Учтены ли все атомы, меняющие СО?</b> Особенно в K₂Cr₂O₇ — там 2 атома хрома.</li>
+      <li><b>Соответствует ли продукт среде?</b> KMnO₄ в кислой → Mn⁺², в нейтральной → MnO₂, в щелочной → K₂MnO₄.</li>
+      <li><b>Не образуется ли в кислой среде оксид или основание?</b> В кислоте продукты — только соли или кислоты.</li>
+      <li><b>Не образуется ли в щелочной среде кислота?</b> В щёлочи продукты — соли или основания.</li>
+      <li><b>Сходится ли баланс по H и O?</b> После расстановки коэффициентов посчитай атомы.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Топ-8</span>Возможные ошибки</h3>
+    <div class="warn">
+      <b>1. Потеря электронов у восстановителя.</b> Например, забыли, что в K₂Cr₂O₇ 2 атома хрома, и учли только один.<br><br>
+      <b>2. Электроны «из космоса».</b> В реакции есть только окислитель, но нет восстановителя (или наоборот).<br><br>
+      <b>3. Продукт не подходит среде.</b> В кислой среде получили Cu(OH)₂ или NH₃ — так не бывает.<br><br>
+      <b>4. Образование металла или оксида в растворе.</b> Они не могут получиться в водном растворе, если реагируют с водой.<br><br>
+      <b>5. Неправильные степени окисления в органике.</b> Забыли учесть неуглеродное окружение.<br><br>
+      <b>6. Ошибки в пероксидах.</b> Кислород в H₂O₂ и Na₂O₂ — это O⁻¹, а не O⁻².<br><br>
+      <b>7. Ошибки в двойных оксидах.</b> В Fe₃O₄ и Pb₃O₄ металлы имеют две разные СО.<br><br>
+      <b>8. Не указан окислитель и восстановитель в ответе.</b> За это снимают балл.
+    </div>
+  </div>
+</section>
+
+<!-- ============ РАЗДЕЛ 16 · РАСШИРЕННЫЕ ТАБЛИЦЫ HNO₃ и H₂SO₄ ============ -->
+<section class="section" id="hno3-detail">
+  <h2 class="section-title">16. HNO₃ и H₂SO₄ с металлами — полная схема</h2>
+
+  <div class="card">
+    <h3><span class="tag">Главное</span>HNO₃ — окислитель всегда</h3>
+    <div class="def"><b>Азотная кислота HNO₃ — окислитель в любой концентрации.</b> Никогда не выделяет H₂. Азот восстанавливается до разных продуктов — в зависимости от активности металла и концентрации кислоты.</div>
+    <div class="rule"><b>Главная закономерность:</b> чем активнее металл и чем меньше концентрация кислоты — тем сильнее восстанавливается азот (уходит дальше от +5).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Схема 1</span>HNO₃(конц.) + Me</h3>
+    <p>Работает для <b>любых металлов</b> — и активных, и неактивных. Исключения: пассивация Al, Cr, Fe; не реагируют Au, Pt.</p>
+    <div class="rx">Cu + 4HNO₃(конц.) → Cu(NO₃)₂ + 2NO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Медь + конц. азотная кислота = нитрат меди(II) + оксид азота(IV) (бурый газ) + вода.</b> Азот N⁺⁵ → N⁺⁴.</div>
+
+    <div class="rx">Zn + 4HNO₃(конц.) → Zn(NO₃)₂ + 2NO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Цинк + конц. азотная кислота = нитрат цинка + оксид азота(IV) + вода.</b> Даже с активным металлом в конц. кислоте получается NO₂.</div>
+
+    <div class="rx">Ag + 2HNO₃(конц.) → AgNO₃ + NO₂↑ + H₂O</div>
+    <div class="rx-cap"><b>Серебро + конц. азотная кислота = нитрат серебра + оксид азота(IV) + вода.</b></div>
+
+    <div class="attention"><b>Вывод:</b> <b>HNO₃(конц.) + любой металл → NO₂</b>. Это универсальное правило.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Схема 2</span>HNO₃(разб.) + неактивный металл</h3>
+    <p><b>Неактивные металлы</b> — правее алюминия в ряду напряжений (Cu, Ag, Hg, Pt, Au).</p>
+    <div class="rx">3Cu + 8HNO₃(разб.) → 3Cu(NO₃)₂ + 2NO↑ + 4H₂O</div>
+    <div class="rx-cap"><b>Медь + разб. азотная кислота = нитрат меди(II) + оксид азота(II) (бесцветный газ) + вода.</b> Азот N⁺⁵ → N⁺².</div>
+
+    <div class="rx">3Ag + 4HNO₃(разб.) → 3AgNO₃ + NO↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Серебро + разб. азотная кислота = нитрат серебра + оксид азота(II) + вода.</b></div>
+
+    <div class="attention"><b>Как узнать:</b> металл стоит <b>правее Al</b> (Cu, Hg, Ag, Pt, Au) → продукт <b>NO</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Схема 3</span>HNO₃(разб.) + металл средней активности</h3>
+    <p><b>Средние металлы</b> — от Al до Fe включительно (Al, Mn, Zn, Cr, Fe).</p>
+    <div class="rx">4Zn + 10HNO₃(разб.) → 4Zn(NO₃)₂ + N₂O↑ + 5H₂O</div>
+    <div class="rx-cap"><b>Цинк + разб. азотная кислота = нитрат цинка + оксид азота(I) + вода.</b> Азот N⁺⁵ → N⁺¹.</div>
+
+    <div class="rx">4Fe + 10HNO₃(разб.) → 4Fe(NO₃)₂ + N₂O↑ + 5H₂O</div>
+    <div class="rx-cap"><b>Железо (при недостатке кислоты) + разб. азотная кислота = нитрат железа(II) + оксид азота(I) + вода.</b> Fe⁰ → Fe⁺².</div>
+
+    <div class="attention"><b>Как узнать:</b> металл от <b>Al до Fe</b> + разб. → продукт <b>N₂O</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Схема 4</span>HNO₃(разб.) + активный металл</h3>
+    <p><b>Активные металлы</b> — левее Mg включительно (Li, K, Ba, Sr, Ca, Na, Mg).</p>
+    <div class="rx">5Mg + 12HNO₃(разб.) → 5Mg(NO₃)₂ + N₂↑ + 6H₂O</div>
+    <div class="rx-cap"><b>Магний + разб. азотная кислота = нитрат магния + азот (газ) + вода.</b> Азот N⁺⁵ → N⁰.</div>
+
+    <div class="rx">4Ca + 10HNO₃(разб.) → 4Ca(NO₃)₂ + N₂↑ + 5H₂O</div>
+    <div class="rx-cap"><b>Кальций + разб. азотная кислота = нитрат кальция + азот + вода.</b></div>
+
+    <div class="attention"><b>Как узнать:</b> металл <b>левее Mg</b> (или сам Mg) + разб. → продукт <b>N₂</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Схема 5</span>HNO₃(очень разб.) + активный металл</h3>
+    <p>Если кислота <b>очень разбавленная</b> и металл <b>активный</b> — азот восстанавливается до <b>NH₄NO₃</b> (или NH₃, который сразу образует соль).</p>
+    <div class="rx">4Mg + 10HNO₃(оч. разб.) → 4Mg(NO₃)₂ + NH₄NO₃ + 3H₂O</div>
+    <div class="rx-cap"><b>Магний + очень разб. азотная кислота = нитрат магния + нитрат аммония + вода.</b> Азот N⁺⁵ → N⁻³.</div>
+
+    <div class="rx">4Zn + 10HNO₃(оч. разб.) → 4Zn(NO₃)₂ + NH₄NO₃ + 3H₂O</div>
+    <div class="rx-cap"><b>Цинк + очень разб. азотная кислота = нитрат цинка + нитрат аммония + вода.</b></div>
+
+    <div class="attention"><b>Как узнать:</b> активный металл + очень разб. → продукт <b>NH₄NO₃</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сводка</span>HNO₃ + Me — таблица продуктов</h3>
+    <table class="color-table">
+      <tr>
+        <th>Металл</th>
+        <th>Конц. HNO₃</th>
+        <th>Разб. HNO₃</th>
+        <th>Оч. разб.</th>
+      </tr>
+      <tr>
+        <td>Активный (Li, K, Na, Mg, Ca)</td>
+        <td>NO₂</td>
+        <td>N₂ / N₂O</td>
+        <td>NH₄NO₃</td>
+      </tr>
+      <tr>
+        <td>Средний (Al, Zn, Cr, Fe)</td>
+        <td>NO₂</td>
+        <td>N₂O</td>
+        <td>NH₄NO₃</td>
+      </tr>
+      <tr>
+        <td>Неактивный (Cu, Ag, Hg)</td>
+        <td>NO₂</td>
+        <td>NO</td>
+        <td>NO</td>
+      </tr>
+      <tr>
+        <td>Au, Pt</td>
+        <td>Не реагируют</td>
+        <td>Не реагируют</td>
+        <td>Не реагируют</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Особые</span>Пассивация и «не реагируют»</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Пассивация (холодная конц. HNO₃)</div><div class="v">Al, Cr, Fe — покрываются оксидной плёнкой и не реагируют</div></div>
+      <div class="row"><div class="k">Чтобы реакция пошла</div><div class="v">нагреть, разбавить кислоту или размельчить металл</div></div>
+      <div class="row"><div class="k">Не реагируют совсем</div><div class="v">Au, Pt — ни при какой концентрации</div></div>
+      <div class="row"><div class="k">Царская водка (3 HCl + 1 HNO₃)</div><div class="v">растворяет Au и Pt</div></div>
+    </div>
+    <div class="rx">Au + HNO₃(конц.) + 4HCl → H[AuCl₄] + NO↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Золото + азотная кислота + соляная кислота = тетрахлороаурат(III) водорода + оксид азота(II) + вода.</b> Царская водка растворяет золото.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Неметаллы</span>HNO₃ + неметаллы</h3>
+    <p>Конц. HNO₃ окисляет неметаллы до высших СО. Продукт — <b>NO₂</b> (при конц.) или <b>NO</b> (при разб.).</p>
+    <div class="rx">S + 6HNO₃(конц.) → H₂SO₄ + 6NO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Сера + конц. азотная кислота = серная кислота + оксид азота(IV) + вода.</b> S⁰ → S⁺⁶.</div>
+
+    <div class="rx">P + 5HNO₃(конц.) + 2H₂O → 3H₃PO₄ + 5NO↑</div>
+    <div class="rx-cap"><b>Фосфор + конц. азотная кислота + вода = фосфорная кислота + оксид азота(II) + вода.</b> P⁰ → P⁺⁵.</div>
+
+    <div class="rx">C + 4HNO₃(конц.) → CO₂↑ + 4NO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Углерод + конц. азотная кислота = оксид углерода(IV) + оксид азота(IV) + вода.</b> C⁰ → C⁺⁴.</div>
+
+    <div class="rx">3I₂ + 10HNO₃(конц.) → 6HIO₃ + 10NO↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Йод + конц. азотная кислота = йодноватая кислота + оксид азота(II) + вода.</b> I⁰ → I⁺⁵.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">H₂SO₄(разб.)</span>Обычная кислота</h3>
+    <p>Разбавленная серная кислота — <b>обычная минеральная кислота</b>. Не окислитель. Реагирует как все кислоты — с металлами <b>левее H₂</b>, выделяя водород.</p>
+    <div class="rx">Zn + H₂SO₄(разб.) → ZnSO₄ + H₂↑</div>
+    <div class="rx-cap"><b>Цинк + разб. серная кислота = сульфат цинка + водород.</b> Реакция обычная, без ОВР особенностей.</div>
+
+    <div class="rx">Fe + H₂SO₄(разб.) → FeSO₄ + H₂↑</div>
+    <div class="rx-cap"><b>Железо + разб. серная кислота = сульфат железа(II) + водород.</b> Fe⁰ → Fe⁺² (не до Fe⁺³ — разб. кислота мягкая).</div>
+
+    <div class="rx">2Al + 3H₂SO₄(разб.) → Al₂(SO₄)₃ + 3H₂↑</div>
+    <div class="rx-cap"><b>Алюминий + разб. серная кислота = сульфат алюминия + водород.</b></div>
+
+    <div class="warn"><b>Cu, Ag, Au, Pt</b> с разб. H₂SO₄ <b>не реагируют</b> — стоят правее H₂.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">H₂SO₄(конц.)</span>Окислитель</h3>
+    <p>Концентрированная серная кислота — <b>окислитель</b>. Водород не выделяется. Сера восстанавливается — куда, зависит от активности металла.</p>
+    <div class="rx">Cu + 2H₂SO₄(конц.) → CuSO₄ + SO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Медь + конц. серная кислота = сульфат меди(II) + оксид серы(IV) + вода.</b> S⁺⁶ → S⁺⁴ (неактивный металл).</div>
+
+    <div class="rx">Zn + 2H₂SO₄(конц.) → ZnSO₄ + SO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Цинк + конц. серная кислота = сульфат цинка + оксид серы(IV) + вода.</b> Начало реакции — SO₂.</div>
+
+    <div class="rx">3Zn + 4H₂SO₄(конц.) → 3ZnSO₄ + S↓ + 4H₂O</div>
+    <div class="rx-cap"><b>Цинк (при избытке) + конц. серная кислота = сульфат цинка + сера (осадок) + вода.</b> S⁺⁶ → S⁰ (средний металл).</div>
+
+    <div class="rx">4Mg + 5H₂SO₄(конц.) → 4MgSO₄ + H₂S↑ + 4H₂O</div>
+    <div class="rx-cap"><b>Магний + конц. серная кислота = сульфат магния + сероводород (газ с запахом) + вода.</b> S⁺⁶ → S⁻² (активный металл).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сводка</span>H₂SO₄(конц.) + Me — таблица</h3>
+    <table class="color-table">
+      <tr>
+        <th>Металл</th>
+        <th>Продукт восстановления серы</th>
+      </tr>
+      <tr>
+        <td>Неактивный (Cu, Ag, Hg)</td>
+        <td>SO₂ (S⁺⁶ → S⁺⁴)</td>
+      </tr>
+      <tr>
+        <td>Средней активности (Zn, Fe, Cr, Mn)</td>
+        <td>S (S⁺⁶ → S⁰) или SO₂</td>
+      </tr>
+      <tr>
+        <td>Активный (Mg, Na, Ca, Li)</td>
+        <td>H₂S (S⁺⁶ → S⁻²)</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Особые</span>H₂SO₄(конц.) — пассивация</h3>
+    <div class="kv">
+      <div class="row"><div class="k">Пассивация (холодная конц. H₂SO₄)</div><div class="v">Al, Cr, Fe — не реагируют. Покрываются плёнкой</div></div>
+      <div class="row"><div class="k">Чтобы реакция пошла</div><div class="v">нагреть кислоту, разбавить или размельчить металл</div></div>
+      <div class="row"><div class="k">Не реагируют совсем</div><div class="v">Au, Pt</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Неметаллы</span>H₂SO₄(конц.) + неметаллы</h3>
+    <p>Конц. H₂SO₄ окисляет неметаллы. Сера восстанавливается до <b>SO₂</b>.</p>
+    <div class="rx">C + 2H₂SO₄(конц.) → CO₂↑ + 2SO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Углерод + конц. серная кислота = оксид углерода(IV) + оксид серы(IV) + вода.</b> C⁰ → C⁺⁴.</div>
+
+    <div class="rx">S + 2H₂SO₄(конц.) → 3SO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Сера + конц. серная кислота = оксид серы(IV) + вода.</b> S⁰ → S⁺⁴ и S⁺⁶ → S⁺⁴ (диспропорционирование).</div>
+
+    <div class="rx">2P + 5H₂SO₄(конц.) → 2H₃PO₄ + 5SO₂↑ + 2H₂O</div>
+    <div class="rx-cap"><b>Фосфор + конц. серная кислота = фосфорная кислота + оксид серы(IV) + вода.</b> P⁰ → P⁺⁵.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Сравнение</span>HNO₃(конц.) vs H₂SO₄(конц.)</h3>
+    <table class="color-table">
+      <tr>
+        <th>Критерий</th>
+        <th>HNO₃(конц.)</th>
+        <th>H₂SO₄(конц.)</th>
+      </tr>
+      <tr>
+        <td>Окислитель</td>
+        <td>N⁺⁵</td>
+        <td>S⁺⁶</td>
+      </tr>
+      <tr>
+        <td>Неактивный Me → продукт</td>
+        <td>NO₂</td>
+        <td>SO₂</td>
+      </tr>
+      <tr>
+        <td>Средний Me → продукт</td>
+        <td>NO₂</td>
+        <td>S или SO₂</td>
+      </tr>
+      <tr>
+        <td>Активный Me → продукт</td>
+        <td>NO₂ (в конц.)</td>
+        <td>H₂S</td>
+      </tr>
+      <tr>
+        <td>Пассивация</td>
+        <td>Al, Cr, Fe</td>
+        <td>Al, Cr, Fe</td>
+      </tr>
+      <tr>
+        <td>Не реагируют</td>
+        <td>Au, Pt</td>
+        <td>Au, Pt</td>
+      </tr>
+      <tr>
+        <td>С неметаллами → продукт</td>
+        <td>NO₂ (конц.) / NO (разб.)</td>
+        <td>SO₂</td>
+      </tr>
+    </table>
+    <div class="rule"><b>Общая логика:</b> HNO₃ — окислитель в любой концентрации. H₂SO₄ — окислитель только в концентрированном виде. Обе пассивируют Al, Cr, Fe. Обе не реагируют с Au, Pt.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Правило</span>Как определить продукт</h3>
+    <ol>
+      <li><b>Смотрим на кислоту.</b> HNO₃ или H₂SO₄(конц.)?</li>
+      <li><b>Смотрим на концентрацию.</b> Конц., разб. или очень разб.?</li>
+      <li><b>Смотрим на металл.</b> Где он в ряду напряжений — активный, средний, неактивный?</li>
+      <li><b>Сопоставляем с таблицей.</b> Находим продукт восстановления.</li>
+      <li><b>Проверяем исключения.</b> Al, Cr, Fe — пассивация. Au, Pt — не реагируют.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ РАЗДЕЛ 17 · СО В ОРГАНИКЕ ============ -->
+<section class="section" id="organic-so">
+  <h2 class="section-title">17. Степени окисления в органических веществах</h2>
+
+  <div class="card">
+    <h3><span class="tag">Главное правило</span>Что учитывать</h3>
+    <div class="def">В органических веществах нас интересуют степени окисления только тех атомов углерода, которые <b>меняют своё окружение</b> в процессе ОВР. Остальные атомы углерода не рассматриваем.</div>
+    <div class="rule"><b>Как считать:</b> общий заряд атома углерода и его <b>неуглеродного окружения</b> принимается за 0. Значит, СО углерода = сумма зарядов всех соседних атомов (кроме других углеродов).</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Метод</span>Как считать СО углерода</h3>
+    <ol>
+      <li><b>Найди атом углерода</b>, который меняет окружение в реакции.</li>
+      <li><b>Посмотри, с чем он связан:</b> с C, H, O, N, Hal?</li>
+      <li><b>Присвой заряды соседям:</b>
+        <ul>
+          <li>C–C — связи с углеродом считаем за 0 (или ±0)</li>
+          <li>C–H — водород даёт +1</li>
+          <li>C–O — кислород даёт −2</li>
+          <li>C–N — азот даёт −3</li>
+          <li>C–Hal — галоген даёт −1</li>
+        </ul>
+      </li>
+      <li><b>Сложи все заряды</b> от соседей — это и будет СО углерода.</li>
+    </ol>
+    <div class="rule"><b>Проверка:</b> сумма СО всех атомов в молекуле = 0.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 1</span>Метан CH₄</h3>
+    <p>Углерод связан с 4 атомами водорода.</p>
+    <div class="rx">CH₄: C–H × 4 → C = 4·(−1) = −4</div>
+    <div class="rx-cap"><b>СО углерода в метане = −4.</b> Водород даёт +1, значит углерод «забирает» 4 электрона.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 2</span>Этан C₂H₆ (по атомам)</h3>
+    <p>Рассмотрим один углерод: он связан с 1 C и 3 H.</p>
+    <div class="rx">C–C (0) + C–H × 3 (+1 каждый) → C = −3</div>
+    <div class="rx-cap"><b>СО каждого углерода в этане = −3.</b> Проверка: 2·(−3) + 6·(+1) = −6 + 6 = 0.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 3</span>2-метилбутен-2</h3>
+    <p>Формула: CH₃–C(CH₃)=CH–CH₃. Нас интересует углерод при двойной связи (в середине).</p>
+    <div class="rx">Атом C при C=C связан с: 2 C (0) + 0 H + 1 C-сосед через двойную связь (0) = 0
+Но у него 1 метильная группа и 1 C-сосед. Итого: 2 C-связи = 0, 1 метил = 0</div>
+    <div class="rx-cap"><b>СО центрального углерода при C=C в 2-метилбутене-2 = 0.</b> Он связан только с углеродами, а углерод-углеродные связи дают 0.</div>
+    <div class="attention"><b>Если бы при C=C был H:</b> например в бутене-1 CH₂=CH–CH₂–CH₃. Первый углерод связан с 1 C (0) + 2 H (+1 каждый) = <b>−2</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 4</span>Ацетон CH₃–CO–CH₃</h3>
+    <p>Центральный углерод связан с кислородом двойной связью и с двумя метильными группами.</p>
+    <div class="rx">C=O: 2 связи с O (−2 каждый) = −4
+C–C × 2: по 0 = 0
+Итого: C = −4 + 0 = +2</div>
+    <div class="rx-cap"><b>СО центрального углерода в ацетоне = +2.</b> Кислород «оттягивает» на себя 4 электрона от углерода.</div>
+    <div class="ex"><b>Проверка:</b> CH₃ (C = −3) × 2 + C (центральный, +2) + O (−2) = −6 + 2 − 2 = −6. Ошибка? Нет! Считаем отдельно: 2·(−3) + (+2) + (−2) = −6 + 0 = −6. В метиле −3, потому что C связан с 3 H (+1) и 1 C (0).<br>Значит: −6 + 2 + (−2) = −6. Не сходится. На самом деле: 2·(−3) + (+2) + (−2) = −6 + 0 = −6. Хм, сумма СО не даёт 0 — это потому что мы считаем не по формальным СО всех атомов, а по локальному методу. Сумма формальных СО: C(1) = −3, C(2) = −3, C(центральный) = +2, O = −2, H × 6 = +6. Итого: −3 −3 +2 −2 +6 = 0. Всё сходится.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Пример 5</span>Уксусная кислота CH₃–COOH</h3>
+    <p>Нас интересует углерод карбоксильной группы.</p>
+    <div class="rx">C в –COOH:
+C=O: 2 связи с O (−2 каждая) = −4
+C–O–H: 1 связь с O (−2) = −2
+C–C: 1 связь с C (0) = 0
+Итого: C = −4 − 2 + 0 = +3</div>
+    <div class="rx-cap"><b>СО углерода карбоксильной группы в уксусной кислоте = +3.</b> Три связи с кислородом.</div>
+
+    <h4>Углерод метильной группы</h4>
+    <div class="rx">C в CH₃:
+C–H × 3 (+1) = +3
+C–C (0) = 0
+Итого: C = −3</div>
+    <div class="rx-cap"><b>СО углерода метила = −3.</b></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Таблица</span>Типичные СО углерода</h3>
+    <table class="color-table">
+      <tr>
+        <th>Фрагмент</th>
+        <th>СО углерода</th>
+        <th>Пример</th>
+      </tr>
+      <tr>
+        <td>–CH₃ (метил)</td>
+        <td>−3</td>
+        <td>Этан, ацетон</td>
+      </tr>
+      <tr>
+        <td>–CH₂– (связь с C, C, H, H)</td>
+        <td>−2</td>
+        <td>Пропан, бутен-1</td>
+      </tr>
+      <tr>
+        <td>=CH₂ (при C=C)</td>
+        <td>−2</td>
+        <td>Этилен, бутен-1</td>
+      </tr>
+      <tr>
+        <td>–CH– (связь с C, C, C, H)</td>
+        <td>−1</td>
+        <td>Изобутан</td>
+      </tr>
+      <tr>
+        <td>=CH– (при C=C)</td>
+        <td>−1</td>
+        <td>Пропен, бутен-2</td>
+      </tr>
+      <tr>
+        <td>–C– (связь с 4 C)</td>
+        <td>0</td>
+        <td>2-метилбутен-2</td>
+      </tr>
+      <tr>
+        <td>=C= (при C=C, 2 углерода)</td>
+        <td>0</td>
+        <td>2-метилбутен-2</td>
+      </tr>
+      <tr>
+        <td>–CH₂–OH (спирт)</td>
+        <td>−1</td>
+        <td>Этанол</td>
+      </tr>
+      <tr>
+        <td>–CH=O (альдегид)</td>
+        <td>+1</td>
+        <td>Ацетальдегид</td>
+      </tr>
+      <tr>
+        <td>–C=O (кетон)</td>
+        <td>+2</td>
+        <td>Ацетон</td>
+      </tr>
+      <tr>
+        <td>–COOH (кислота)</td>
+        <td>+3</td>
+        <td>Уксусная кислота</td>
+      </tr>
+      <tr>
+        <td>–COO– (сложный эфир)</td>
+        <td>+3</td>
+        <td>Этилацетат</td>
+      </tr>
+      <tr>
+        <td>–C≡N (нитрил)</td>
+        <td>+3</td>
+        <td>Ацетонитрил</td>
+      </tr>
+      <tr>
+        <td>C₆H₅–CH₃ (толуол, метил)</td>
+        <td>−3</td>
+        <td>Толуол</td>
+      </tr>
+      <tr>
+        <td>C₆H₅–COOH (бензойная)</td>
+        <td>+3</td>
+        <td>Бензойная кислота</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">ОВР с органикой</span>Как работает</h3>
+    <p>В ОВР органика обычно <b>восстановитель</b> — окисляется (СО углерода растёт). Окислитель — KMnO₄, K₂Cr₂O₇ и т.д.</p>
+    <div class="rx">5CH₃-CH=CH-CH₃ + 8KMnO₄ + 12H₂SO₄ → 10CH₃COOH + 8MnSO₄ + 4K₂SO₄ + 12H₂O</div>
+    <div class="rx-cap"><b>Бутен-2 + перманганат калия + серная кислота = уксусная кислота + сульфат марганца(II) + сульфат калия + вода.</b> Углерод в C=C: было −1, стало +3 (в –COOH). Двойная связь разорвалась, каждый углерод дал кислоту.</div>
+
+    <div class="rx">CH₃-CH=CH₂ + 2KMnO₄ + 3H₂SO₄ → CH₃COOH + CO₂↑ + K₂SO₄ + 2MnSO₄ + 4H₂O</div>
+    <div class="rx-cap"><b>Пропен + перманганат калия + серная кислота = уксусная кислота + оксид углерода(IV) + сульфат калия + сульфат марганца(II) + вода.</b> Углерод =CH₂: было −2, стало +4 (CO₂). Углерод =CH–: было −1, стало +3 (CH₃COOH).</div>
+
+    <div class="rule"><b>Правила жёсткого окисления алкенов:</b><br>
+    • CH₃–CH= → CH₃COOH (уксусная кислота)<br>
+    • =CH₂ → CO₂ (углекислый газ)<br>
+    • –CH= → –COOH (карбоновая кислота)</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Мягкое окисление</span>Алкены → диолы</h3>
+    <p>При мягком окислении (KMnO₄, 0 °C, водный раствор) двойная связь не рвётся, образуется диол.</p>
+    <div class="rx">3CH₂=CH₂ + 2KMnO₄ + 4H₂O → 3HO-CH₂-CH₂-OH + 2MnO₂↓ + 2KOH</div>
+    <div class="rx-cap"><b>Этилен + перманганат калия + вода = этиленгликоль (этандиол-1,2) + оксид марганца(IV) (осадок) + гидроксид калия.</b> Углерод в =CH₂: было −2, стало −1 (в –CH₂OH). Повышение на 1.</div>
+
+    <div class="rx">3CH₃-CH=CH₂ + 2KMnO₄ + 4H₂O → 3CH₃-CH(OH)-CH₂-OH + 2MnO₂↓ + 2KOH</div>
+    <div class="rx-cap"><b>Пропен + перманганат калия + вода = пропандиол-1,2 + оксид марганца(IV) + гидроксид калия.</b></div>
+  </div>
+</section>
+
+<!-- ============ РАЗДЕЛ 18 · ПРАКТИКА ============ -->
+<section class="section" id="practice-tasks">
+  <h2 class="section-title">18. Практика: 16 заданий с решениями</h2>
+
+  <div class="card">
+    <h3><span class="tag">Задание 1</span>Расстановка СО</h3>
+    <p><b>Условие:</b> Расставьте степени окисления в веществах:</p>
+    <ul>
+      <li>KMnO₄</li>
+      <li>K₂Cr₂O₇</li>
+      <li>H₂O₂</li>
+      <li>Fe₃O₄</li>
+      <li>Na₂O₂</li>
+    </ul>
+    <div class="rule"><b>Решение:</b><br>
+    KMnO₄: K⁺¹ + Mnˣ + 4·O⁻² = 0 → 1 + x − 8 = 0 → <b>Mn⁺⁷</b><br>
+    K₂Cr₂O₇: 2·(+1) + 2x + 7·(−2) = 0 → 2 + 2x − 14 = 0 → <b>Cr⁺⁶</b><br>
+    H₂O₂: 2·(+1) + 2x = 0 → <b>O⁻¹</b><br>
+    Fe₃O₄: 3x + 4·(−2) = 0 → 3x = 8 → <b>Fe = +8/3</b> (смешанный оксид)<br>
+    Na₂O₂: 2·(+1) + 2x = 0 → <b>O⁻¹</b></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 2</span>СО углерода в органике</h3>
+    <p><b>Условие:</b> Определите СО углерода в 2-метилбутене-2, ацетоне и уксусной кислоте.</p>
+    <div class="rule"><b>Решение:</b><br>
+    <b>2-метилбутен-2</b> (CH₃–C(CH₃)=CH–CH₃): центральный углерод при C=C связан с 2 C и 1 C через двойную связь → <b>СО = 0</b>.<br>
+    <b>Ацетон</b> (CH₃–CO–CH₃): центральный углерод связан с O двойной связью и 2 C → <b>СО = +2</b>.<br>
+    <b>Уксусная кислота</b> (CH₃–COOH): углерод в –COOH связан с O (двойная) и O–H → <b>СО = +3</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 3</span>Коэффициент с дихроматом</h3>
+    <p><b>Условие:</b> K₂Cr₂O₇ + H₂S + H₂SO₄ → Cr₂(SO₄)₃ + S↓ + K₂SO₄ + H₂O. Какой коэффициент перед дихроматом?</p>
+    <div class="rule"><b>Решение:</b><br>
+    2Cr⁺⁶ + 6e⁻ → 2Cr⁺³ | ×1<br>
+    S⁻² − 2e⁻ → S⁰ | ×3<br>
+    НОК(6, 2) = 6. Перед K₂Cr₂O₇ — коэффициент <b>1</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 4</span>Коэффициент с магнием</h3>
+    <p><b>Условие:</b> Mg + HNO₃(разб.) → Mg(NO₃)₂ + N₂ + H₂O. Какой коэффициент перед Mg?</p>
+    <div class="rule"><b>Решение:</b><br>
+    Mg⁰ − 2e⁻ → Mg⁺² | ×5<br>
+    2N⁺⁵ + 10e⁻ → N₂⁰ | ×1<br>
+    Перед Mg — <b>5</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 5</span>Среда реакции</h3>
+    <p><b>Условие:</b> KMnO₄ + K₂SO₃ + X → K₂MnO₄ + K₂SO₄ + ... Что такое X — кислота, вода или щёлочь?</p>
+    <div class="rule"><b>Решение:</b><br>
+    Продукт — K₂MnO₄ (Mn⁺⁶). Это значит, что среда <b>щелочная</b>. X = KOH.<br>
+    Уравнение: 2KMnO₄ + K₂SO₃ + 2KOH → 2K₂MnO₄ + K₂SO₄ + H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 6</span>Вода в реакции</h3>
+    <p><b>Условие:</b> Zn + KOH + H₂O → K₂[Zn(OH)₄] + H₂↑. В какой стороне вода?</p>
+    <div class="rule"><b>Решение:</b><br>
+    Zn⁰ − 2e⁻ → Zn⁺² | ×1<br>
+    2H⁺¹ + 2e⁻ → H₂⁰ | ×1<br>
+    Уравнение: Zn + 2KOH + 2H₂O → K₂[Zn(OH)₄] + H₂↑. Вода — <b>в левой части</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 7</span>Мягкое и жёсткое окисление</h3>
+    <p><b>Условие:</b> Допишите реакции окисления пропена:</p>
+    <ul>
+      <li>хол. раствор KMnO₄ (мягкое)</li>
+      <li>KMnO₄ + H₂SO₄, t° (жёсткое)</li>
+    </ul>
+    <div class="rule"><b>Решение:</b><br>
+    <b>Мягкое:</b> 3CH₃-CH=CH₂ + 2KMnO₄ + 4H₂O → 3CH₃-CH(OH)-CH₂-OH + 2MnO₂↓ + 2KOH.<br>
+    <b>Жёсткое:</b> CH₃-CH=CH₂ + 2KMnO₄ + 3H₂SO₄ → CH₃COOH + CO₂↑ + K₂SO₄ + 2MnSO₄ + 4H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 8</span>Продукты по силе окислителя</h3>
+    <p><b>Условие:</b> Допишите: FeS + HNO₃(конц.) → ...</p>
+    <div class="rule"><b>Решение:</b><br>
+    HNO₃(конц.) — сильный окислитель. S⁻² окислится до S⁺⁶ (сульфат), Fe²⁺ → Fe³⁺.<br>
+    FeS + 12HNO₃(конц.) → Fe(NO₃)₃ + H₂SO₄ + 9NO₂↑ + 5H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 9</span>До какой СО окислится сера</h3>
+    <p><b>Условие:</b> Допишите: H₂S + K₂Cr₂O₇ + H₂SO₄ → ...</p>
+    <div class="rule"><b>Решение:</b><br>
+    K₂Cr₂O₇ — сильный окислитель в кислой среде. Но H₂S — слабый восстановитель, окислится только до S⁰.<br>
+    K₂Cr₂O₇ + 3H₂S + 4H₂SO₄ → Cr₂(SO₄)₃ + 3S↓ + K₂SO₄ + 7H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 10</span>Сколько продуктов</h3>
+    <p><b>Условие:</b> Допишите: MnO₂ + HCl(конц.) → ...</p>
+    <div class="rule"><b>Решение:</b><br>
+    Mn⁺⁴ + 2e⁻ → Mn⁺² | ×1<br>
+    2Cl⁻ − 2e⁻ → Cl₂⁰ | ×1<br>
+    MnO₂ + 4HCl(конц.) → MnCl₂ + Cl₂↑ + 2H₂O. Продуктов — <b>три</b>: соль, газ, вода.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 11</span>Кто окислитель, кто восстановитель</h3>
+    <p><b>Условие:</b> Cl₂ + I₂ + H₂O → ... Кто окислитель, кто восстановитель?</p>
+    <div class="rule"><b>Решение:</b><br>
+    Хлор электроотрицательнее йода (3,16 vs 2,66). Значит, <b>Cl₂ — окислитель</b> (Cl⁰ → Cl⁻¹), <b>I₂ — восстановитель</b> (I⁰ → I⁺⁵).<br>
+    5Cl₂ + I₂ + 6H₂O → 2HIO₃ + 10HCl.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 12</span>Роль пероксида водорода</h3>
+    <p><b>Условие:</b> Определите роль H₂O₂ в реакциях:</p>
+    <ul>
+      <li>H₂O₂ + KMnO₄ + H₂SO₄ → ...</li>
+      <li>H₂O₂ + KNO₂ → ...</li>
+      <li>H₂O₂ + PbS → ...</li>
+    </ul>
+    <div class="rule"><b>Решение:</b><br>
+    <b>1)</b> KMnO₄ — сильный окислитель → H₂O₂ <b>восстановитель</b> (даёт O₂).<br>
+    2KMnO₄ + 5H₂O₂ + 3H₂SO₄ → 2MnSO₄ + K₂SO₄ + 5O₂↑ + 8H₂O.<br>
+    <b>2)</b> KNO₂ может быть и окислителем, и восстановителем, но нитрит чаще восстановитель → H₂O₂ <b>окислитель</b> (даёт H₂O).<br>
+    H₂O₂ + KNO₂ → KNO₃ + H₂O.<br>
+    <b>3)</b> PbS — восстановитель → H₂O₂ <b>окислитель</b>.<br>
+    PbS + 4H₂O₂ → PbSO₄ + 4H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 13</span>Допишите и уравняйте</h3>
+    <p><b>Условие:</b> KI + KMnO₄ + H₂SO₄ → I₂ + MnSO₄ + ...</p>
+    <div class="rule"><b>Решение:</b><br>
+    2I⁻ − 2e⁻ → I₂ | ×5<br>
+    Mn⁺⁷ + 5e⁻ → Mn⁺² | ×2<br>
+    10KI + 2KMnO₄ + 8H₂SO₄ → 5I₂ + 2MnSO₄ + 6K₂SO₄ + 8H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 14</span>Двойной оксид</h3>
+    <p><b>Условие:</b> Fe₃O₄ + HNO₃(конц.) → ... Какой углерод (железо) окисляется?</p>
+    <div class="rule"><b>Решение:</b><br>
+    В Fe₃O₄ два типа железа: Fe⁺² и 2Fe⁺³. Окисляется только Fe⁺² → Fe⁺³.<br>
+    Fe₃O₄ + 10HNO₃(конц.) → 3Fe(NO₃)₃ + NO₂↑ + 5H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 15</span>Надпероксид</h3>
+    <p><b>Условие:</b> KO₂ + ... → O₂ + ... Сколько электронов отдаёт надпероксид?</p>
+    <div class="rule"><b>Решение:</b><br>
+    В KO₂ кислород имеет СО −½ (надпероксид-ион O₂⁻).<br>
+    Общий заряд O₂⁻ = −1. Значит, кислород может отдать только <b>1 электрон</b>.<br>
+    2KO₂ + 2H₂O → 2KOH + H₂O₂ + O₂↑.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Задание 16</span>Ошибочные продукты</h3>
+    <p><b>Условие:</b> Найдите ошибки в реакциях:</p>
+    <ul>
+      <li>KMnO₄ + H₂O₂ + H₂SO₄ → Mn(OH)₂ + O₂ + ...</li>
+      <li>K₂Cr₂O₇ + KOH → Cr(OH)₃ + ...</li>
+      <li>Zn + HNO₃(разб.) → Zn(NO₃)₂ + H₂↑</li>
+    </ul>
+    <div class="rule"><b>Решение:</b><br>
+    <b>1)</b> В кислой среде не может получиться Mn(OH)₂ (основание). Правильно: MnSO₄.<br>
+    <b>2)</b> В щелочной среде K₂Cr₂O₇ даёт Cr(OH)₃↓, но здесь нет восстановителя. Правильно: реакция не идёт (нет ОВР).<br>
+    <b>3)</b> HNO₃ не даёт H₂! Правильно: Zn + HNO₃(разб.) → Zn(NO₃)₂ + N₂O + H₂O.</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Итог</span>Что мы разобрали</h3>
+    <ul>
+      <li>Расстановка СО в неорганике и органике.</li>
+      <li>Электронный баланс с учётом коэффициентов.</li>
+      <li>Определение среды реакции.</li>
+      <li>Мягкое и жёсткое окисление алкенов.</li>
+      <li>Выбор продуктов по силе окислителя.</li>
+      <li>Особые случаи: надпероксиды, двойные оксиды, пероксиды.</li>
+      <li>Поиск ошибок в реакциях.</li>
+    </ul>
+    <div class="rule"><b>Совет:</b> перед решением задания 29 на ЕГЭ всегда проверяй:<br>
+    1) есть ли окислитель И восстановитель;<br>
+    2) подходит ли продукт среде;<br>
+    3) сходится ли баланс по H и O.</div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p><b>ОВР · Задание 29</b> — расширенный курс для подготовки к ЕГЭ по химии.</p>
+  <p style="margin-top:8px">Материал носит учебный характер. Проверяйте реакции по официальным источникам ФИПИ.</p>
+  <p style="margin-top:8px;font-size:12.5px;opacity:.7">© <span id="year"></span> · Сделано с ♥ для подготовки</p>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Наверх">↑</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- READING PROGRESS ---------- */
+  const progressBar = document.getElementById('progress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    const pct = height > 0 ? (scrolled / height) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+
+  /* ---------- BACK TO TOP ---------- */
+  const toTop = document.getElementById('toTop');
+  function toggleToTop(){
+    if (window.scrollY > 400) toTop.classList.add('show');
+    else toTop.classList.remove('show');
+  }
+  toTop.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  /* ---------- SCROLLSPY ---------- */
+  const navLinks = document.querySelectorAll('#navLinks a');
+  const sections = document.querySelectorAll('section.section');
+  const linkMap = new Map();
+  navLinks.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    linkMap.set(id, a);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = linkMap.get(entry.target.id);
+        if (link){
+          link.classList.add('active');
+          // auto-scroll nav to keep active link visible
+          const navLinksEl = document.getElementById('navLinks');
+          const linkRect = link.getBoundingClientRect();
+          const navRect = navLinksEl.getBoundingClientRect();
+          if (linkRect.left < navRect.left || linkRect.right > navRect.right){
+            link.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+          }
+        }
+      }
+    });
+  }, {rootMargin: '-30% 0px -60% 0px', threshold: 0});
+
+  sections.forEach(s => observer.observe(s));
+
+  /* ---------- SECTION REVEAL ---------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {rootMargin: '0px 0px -50px 0px', threshold: 0.05});
+  sections.forEach(s => revealObserver.observe(s));
+
+  /* ---------- THEME TOGGLE ---------- */
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', initialTheme);
+  themeBtn.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+
+  themeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+
+  /* ---------- PRINT ---------- */
+  document.getElementById('printBtn').addEventListener('click', () => {
+    window.print();
+  });
+
+  /* ---------- SEARCH ---------- */
+  const searchInput = document.getElementById('searchInput');
+  const navLinksEl = document.getElementById('navLinks');
+  searchInput.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    let visible = 0;
+    navLinks.forEach(a => {
+      const text = a.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      a.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    if (q && visible === 0){
+      navLinksEl.classList.add('no-match');
+    } else {
+      navLinksEl.classList.remove('no-match');
+    }
+  });
+  // clear search on Escape
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.blur();
+    }
+  });
+
+  /* ---------- KEYBOARD SHORTCUTS ---------- */
+  document.addEventListener('keydown', (e) => {
+    // Ctrl/Cmd + K → focus search
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+    // "t" → toggle theme (when not typing)
+    if (e.key === 't' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
+      themeBtn.click();
+    }
+    // Home → top
+    if (e.key === 'Home' && document.activeElement.tagName !== 'INPUT'){
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+
+  /* ---------- INITIAL ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+  updateProgress();
+  toggleToTop();
+
+  window.addEventListener('scroll', () => {
+    updateProgress();
+    toggleToTop();
+  }, {passive:true});
+  window.addEventListener('resize', updateProgress, {passive:true});
+})();
+</script>
+</body>
+</html>
